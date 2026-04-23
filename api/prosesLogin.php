@@ -28,17 +28,17 @@ if (mysqli_num_rows($hasil) === 1) {
 
         // arahkan berdasarkan role
         if ($user['role'] === 'admin') {
-            header("Location: admin.php");
+            header("Location: /api/admin.php");
         } else {
-            header("Location: dashboard.php");
+            header("Location: /api/dashboard.php");
         }
         exit();
     } else {
-        header("Location: login.php?error=Kata sandi salah.");
+        header("Location: /api/login.php?error=Kata sandi salah.");
         exit();
     }
 } else {
-    header("Location: login.php?error=Email tidak terdaftar.");
+    header("Location: /api/login.php?error=Email tidak terdaftar.");
     exit();
 }
 
