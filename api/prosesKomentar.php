@@ -7,10 +7,7 @@ if (!isset($_SESSION['nama'])) {
     exit();
 }
 
-$koneksi = mysqli_connect("localhost", "root", "", "cuacaku");
-if (!$koneksi) {
-    die("Koneksi database gagal: " . mysqli_connect_error());
-}
+require_once 'koneksi.php';
 
 $id_pengguna  = $_SESSION['id_pengguna'];
 $nama         = $_SESSION['nama'];

@@ -7,10 +7,7 @@ if (!isset($_SESSION['nama']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
-$koneksi = mysqli_connect("localhost", "root", "", "cuacaku");
-if (!$koneksi) {
-    die("Koneksi database gagal: " . mysqli_connect_error());
-}
+require_once 'koneksi.php';
 
 $aksi = $_GET['aksi'] ?? '';
 $id   = (int) ($_GET['id'] ?? 0);

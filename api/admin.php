@@ -6,11 +6,7 @@ if (!isset($_SESSION['nama']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
-// koneksi database
-$koneksi = mysqli_connect("localhost", "root", "", "cuacaku");
-if (!$koneksi) {
-    die("Koneksi database gagal: " . mysqli_connect_error());
-}
+require_once 'koneksi.php';
 
 // ambil semua data pengguna
 $query    = "SELECT * FROM pengguna ORDER BY id ASC";

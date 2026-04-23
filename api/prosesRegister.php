@@ -5,17 +5,7 @@
 session_start();
 
 // koneksi ke database
-$host     = "localhost";
-$user     = "root";       // default XAMPP
-$password = "";           // default XAMPP kosong
-$database = "cuacaku";    // nama database yang dibuat di phpMyAdmin
-
-$koneksi = mysqli_connect($host, $user, $password, $database);
-
-// cek koneksi
-if (!$koneksi) {
-    die("Koneksi database gagal: " . mysqli_connect_error());
-}
+require_once 'koneksi.php';
 
 // ambil data dari form
 $nama            = trim($_POST['nama']);

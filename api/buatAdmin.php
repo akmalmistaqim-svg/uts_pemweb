@@ -3,10 +3,7 @@
 // jalankan file ini SEKALI di browser: localhost/webcuaca/buatAdmin.php
 // setelah admin terbuat, HAPUS file ini dari folder!
 
-$koneksi = mysqli_connect("localhost", "root", "", "cuacaku");
-if (!$koneksi) {
-    die("Koneksi database gagal: " . mysqli_connect_error());
-}
+require_once 'koneksi.php';
 
 // data akun admin — bisa diganti sesuai kebutuhan
 $nama          = "Administrator";
