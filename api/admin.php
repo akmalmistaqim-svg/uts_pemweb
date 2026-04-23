@@ -1,7 +1,7 @@
 <?php
 session_start();
 // cek session dan role, kalau bukan admin langsung balik ke dashboard
-if (!isset($_SESSION['nama']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['id_pengguna']) || $_SESSION['role'] !== 'admin') {
     header("Location: dashboard.php");
     exit();
 }
