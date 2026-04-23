@@ -2,10 +2,8 @@
 // prosesLogin.php
 session_start();
 
-$koneksi = mysqli_connect("localhost", "root", "", "cuacaku");
-if (!$koneksi) {
-    die("Koneksi database gagal: " . mysqli_connect_error());
-}
+// koneksi ke database
+require_once 'koneksi.php';
 
 $email    = trim($_POST['email']);
 $password = $_POST['password'];
