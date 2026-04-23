@@ -1,8 +1,8 @@
 <?php
 // cek session, kalau belum login → balik ke halaman login
 session_start();
-if (!isset($_SESSION['nama'])) {
-    header("Location: /api/login.php");
+if (!isset($_SESSION['id_pengguna'])) {
+    header("Location: login.php");
     exit();
 }
 ?>
