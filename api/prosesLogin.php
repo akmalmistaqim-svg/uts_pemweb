@@ -26,12 +26,6 @@ if (mysqli_num_rows($hasil) === 1) {
         $_SESSION['email']       = $user['email'];
         $_SESSION['role']        = $user['role'];
 
-        echo "Login berhasil!";
-        echo "<pre>";
-        var_dump($_SESSION);
-        echo "</pre>";
-        die();
-
         // arahkan berdasarkan role
         if ($user['role'] === 'admin') {
             header("Location: admin.php");
