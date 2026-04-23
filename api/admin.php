@@ -31,7 +31,7 @@ $pengguna = mysqli_query($koneksi, $query);
   <nav class="bg-sky-200 fixed w-full z-20 top-0 border-b border-sky-300">
     <div class="max-w-screen-xl flex items-center justify-between mx-auto px-6 py-4">
       <a href="admin.php" class="flex items-center gap-3">
-        <img src="1f324_3d.webp" class="h-7" alt="Logo Cuaca" />
+        <img src="../1f324_3d.webp" class="h-7" alt="Logo Cuaca" />
         <span class="text-xl text-gray-900 font-semibold">CuacaKu — Admin</span>
       </a>
       <div class="flex items-center gap-4">

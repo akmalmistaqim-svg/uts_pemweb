@@ -20,7 +20,7 @@ if (isset($_SESSION['nama'])) {
   <div class="flex min-h-screen flex-col justify-center px-6 py-12 lg:px-8">
 
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img src="1f324_3d.webp" alt="Logo Cuaca" class="mx-auto h-20 w-auto" />
+      <img src="../1f324_3d.webp" alt="Logo Cuaca" class="mx-auto h-20 w-auto" />
       <h2 class="mt-4 text-center text-2xl font-bold tracking-tight text-white">
         Masuk ke akun Anda
       </h2>
