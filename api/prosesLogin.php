@@ -21,10 +21,12 @@ if (mysqli_num_rows($hasil) === 1) {
 
     if (password_verify($password, $user['password'])) {
         // simpan id, nama, email, dan role ke session
-        $_SESSION['id_pengguna'] = $user['id'];
-        $_SESSION['nama']        = $user['nama'];
-        $_SESSION['email']       = $user['email'];
-        $_SESSION['role']        = $user['role'];
+       // Hapus semua $_SESSION
+        // Ganti pakai setcookie:
+        setcookie('id_pengguna', $user['id'], time() + 3600, '/', '', true, true);
+        setcookie('nama', $user['nama'], time() + 3600, '/', '', true, true);
+        setcookie('email', $user['email'], time() + 3600, '/', '', true, true);
+        setcookie('role', $user['role'], time() + 3600, '/', '', true, true);
 
         // arahkan berdasarkan role
         if ($user['role'] === 'admin') {

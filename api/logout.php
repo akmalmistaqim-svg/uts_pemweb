@@ -1,9 +1,8 @@
 <?php
-// proses/logout.php
-// menghapus semua session dan redirect ke halaman login
-
-session_start();
-session_destroy(); // hapus semua session
+setcookie('id_pengguna', '', time() - 3600, '/');
+setcookie('nama', '', time() - 3600, '/');
+setcookie('email', '', time() - 3600, '/');
+setcookie('role', '', time() - 3600, '/');
 
 header("Location: login.php");
 exit();
