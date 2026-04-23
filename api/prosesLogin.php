@@ -28,8 +28,10 @@ if (mysqli_num_rows($hasil) === 1) {
 
         // arahkan berdasarkan role
         if ($user['role'] === 'admin') {
+            session_write_close();
             header("Location: /api/admin.php");
         } else {
+            session_write_close();
             header("Location: /api/dashboard.php");
         }
         exit();
