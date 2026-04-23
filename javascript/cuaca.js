@@ -21,7 +21,7 @@ function cekPrediksi() {
   error.classList.add('hidden');
 
   // fetch data cuaca dari OpenWeatherMap lewat PHP
-  fetch('proses/ambilCuaca.php?kota=' + encodeURIComponent(daerah))
+  fetch('../api/ambilCuaca.php?kota=' + encodeURIComponent(daerah))
     .then(res => res.json())
     .then(cuaca => {
 
@@ -86,7 +86,7 @@ function cekPrediksi() {
       document.getElementById('hasilPrediksi').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
    // simpan kota ke session supaya muncul di kabar_sekitar.php
-      fetch('proses/simpanKota.php?kota=' + encodeURIComponent(daerah));
+      fetch('../api/simpanKota.php?kota=' + encodeURIComponent(daerah));
 
     })
     .catch(err => {
