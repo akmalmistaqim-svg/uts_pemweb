@@ -62,7 +62,7 @@ if (!isset($_SESSION['id_pengguna'])) {
         <label class="block text-sm font-medium text-gray-700 mb-2">📍 Daerah / Kota</label>
         <select id="inputDaerah"
   class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white text-gray-700
-  focus:outline-none focus:ring-2 focus:ring-blue-400">
+  focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none bg-white">
   <option value="">-- Pilih Daerah --</option>
 </select>
 
