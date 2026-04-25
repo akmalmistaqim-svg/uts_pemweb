@@ -1,9 +1,6 @@
 <?php
-// prosesLogin.php
-session_start();
-
-// koneksi ke database
 require_once 'koneksi.php';
+require_once 'session_handler.php';
 
 $email    = trim($_POST['email']);
 $password = $_POST['password'];
@@ -20,15 +17,11 @@ if (mysqli_num_rows($hasil) === 1) {
     $user = mysqli_fetch_assoc($hasil);
 
     if (password_verify($password, $user['password'])) {
-        // simpan id, nama, email, dan role ke session
-       // Hapus semua $_SESSION
-        // Ganti pakai setcookie:
-        setcookie('id_pengguna', $user['id'], time() + 3600, '/', '', true, true);
-        setcookie('nama', $user['nama'], time() + 3600, '/', '', true, true);
-        setcookie('email', $user['email'], time() + 3600, '/', '', true, true);
-        setcookie('role', $user['role'], time() + 3600, '/', '', true, true);
+        $_SESSION['id_pengguna'] = $user['id'];
+        $_SESSION['nama']        = $user['nama'];
+        $_SESSION['email']       = $user['email'];
+        $_SESSION['role']        = $user['role'];
 
-        // arahkan berdasarkan role
         if ($user['role'] === 'admin') {
             header("Location: admin.php");
         } else {

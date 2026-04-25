@@ -1,8 +1,7 @@
 <?php
-session_start();
-
-// cek session dan role, kalau bukan admin langsung balik ke dashboard
-if (!isset($_COOKIE['id_pengguna']) || $_COOKIE['role'] !== 'admin') {
+require_once 'koneksi.php';
+require_once 'session_handler.php';
+if (!isset($_SESSION['id_pengguna']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php");
     exit();
 }
@@ -32,7 +31,7 @@ $pengguna = mysqli_query($koneksi, $query);
         <span class="text-xl text-gray-900 font-semibold">CuacaKu — Admin</span>
       </a>
       <div class="flex items-center gap-4">
-        <span class="text-sm text-gray-600">👋 <?php echo htmlspecialchars($_COOKIE['nama']); ?></span>
+        <span class="text-sm text-gray-600">👋 <?php echo htmlspecialchars($_SESSION['nama']); ?></span>
         <a href="logout.php"
           class="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl transition-colors">
           Logout
@@ -108,7 +107,7 @@ $pengguna = mysqli_query($koneksi, $query);
                   </a>
                 <?php endif; ?>
                 <!-- tombol hapus (tidak bisa hapus diri sendiri) -->
-                <?php if ($row['email'] !== $_COOKIE['email']): ?>
+                <?php if ($row['email'] !== $_SESSION['email']): ?>
                   <a href="prosesAdmin.php?aksi=hapus&id=<?php echo $row['id']; ?>"
                     class="text-xs bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg transition-colors"
                     onclick="return confirm('Hapus pengguna <?php echo htmlspecialchars($row['nama']); ?>?')">

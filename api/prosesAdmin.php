@@ -1,8 +1,7 @@
 <?php
-// prosesAdmin.php
-session_start();
-
-if (!isset($_SESSION['nama']) || $_SESSION['role'] !== 'admin') {
+require_once 'koneksi.php';
+require_once 'session_handler.php';
+if (!isset($_SESSION['id_pengguna']) || $_SESSION['role'] !== 'admin') {
     header("Location: dashboard.php");
     exit();
 }

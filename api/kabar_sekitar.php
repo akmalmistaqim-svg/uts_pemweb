@@ -1,15 +1,9 @@
 <?php
-session_start();
-// kalau belum login balik ke index
-if (!isset($_SESSION['nama'])) {
+require_once 'koneksi.php';
+require_once 'session_handler.php';
+if (!isset($_SESSION['id_pengguna'])) {
     header("Location: login.php");
     exit();
-}
-
-// koneksi database
-$koneksi = mysqli_connect("localhost", "root", "", "cuacaku");
-if (!$koneksi) {
-    die("Koneksi database gagal: " . mysqli_connect_error());
 }
 
 // ambil kota dari session (disimpan waktu cek cuaca)

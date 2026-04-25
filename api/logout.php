@@ -1,8 +1,8 @@
 <?php
-setcookie('id_pengguna', '', time() - 3600, '/');
-setcookie('nama', '', time() - 3600, '/');
-setcookie('email', '', time() - 3600, '/');
-setcookie('role', '', time() - 3600, '/');
+require_once 'koneksi.php';
+require_once 'session_handler.php';
+
+session_destroy();
 
 header("Location: login.php");
 exit();
