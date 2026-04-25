@@ -136,7 +136,7 @@ $komentar = mysqli_query($koneksi, "SELECT * FROM komentar ORDER BY dibuat_pada 
               </div>
               <div>
                 <p class="font-semibold text-gray-900 text-sm"><?php echo htmlspecialchars($row['nama']); ?></p>
-                <p class="text-xs text-gray-400">📍 <?php echo htmlspecialchars($row['kota']); ?> · <?php echo date('d M Y, H:i', strtotime($row['dibuat_pada'])); ?></p>
+                <p class="text-xs text-gray-400">📍 <?php echo htmlspecialchars($row['kota']); ?> · <?php echo $row['dibuat_pada'] ? date('d M Y, H:i', strtotime($row['dibuat_pada'])) : '-'; ?></p>
               </div>
             </div>
             <!-- rating bintang -->
@@ -166,4 +166,3 @@ $komentar = mysqli_query($koneksi, "SELECT * FROM komentar ORDER BY dibuat_pada 
 
 </body>
 </html>
-<?php mysqli_close($koneksi); ?>
