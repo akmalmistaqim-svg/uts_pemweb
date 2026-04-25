@@ -126,4 +126,3 @@ $pengguna = mysqli_query($koneksi, $query);
 
 </body>
 </html>
-<?php mysqli_close($koneksi); ?>
