@@ -22,9 +22,6 @@ if (mysqli_num_rows($hasil) === 1) {
         $_SESSION['email']       = $user['email'];
         $_SESSION['role']        = $user['role'];
 
-        var_dump($_SESSION);
-        die();
-
         if ($user['role'] === 'admin') {
             header("Location: admin.php");
         } else {
