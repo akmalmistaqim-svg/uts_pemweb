@@ -13,5 +13,8 @@
             "src": "/(.*)",
             "dest": "/$1"
         }
-    ]
+    ],
+    "env": {
+        "PHP_INI_SCAN_DIR": "/var/task/user"
+    }
 }
