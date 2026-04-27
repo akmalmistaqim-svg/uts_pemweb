@@ -37,5 +37,4 @@ if (mysqli_num_rows($hasil) === 1) {
     exit();
 }
 
-mysqli_close($koneksi);
 ?>
