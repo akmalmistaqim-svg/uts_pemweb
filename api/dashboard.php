@@ -1,10 +1,8 @@
 <?php
 require_once 'koneksi.php';
 require_once 'session_handler.php';
-if (!isset($_SESSION['id_pengguna'])) {
-    header("Location: login.php");
-    exit();
-}
+var_dump($_SESSION);
+exit();
 ?>
 <!DOCTYPE html>
 <html lang="id">
