@@ -2,7 +2,7 @@
 require_once 'koneksi.php';
 require_once 'session_handler.php';
 var_dump($_SESSION);
-exit();
+die();
 ?>
 <!DOCTYPE html>
 <html lang="id">
