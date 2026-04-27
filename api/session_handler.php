@@ -1,11 +1,5 @@
 <?php
 require_once 'koneksi.php';
-require_once 'session_handler.php';
-
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header("Location: login.php");
-    exit();
-}
 
 class DbSession {
     private $koneksi;

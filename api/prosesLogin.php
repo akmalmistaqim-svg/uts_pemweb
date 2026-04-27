@@ -2,6 +2,11 @@
 require_once 'koneksi.php';
 require_once 'session_handler.php';
 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header("Location: login.php");
+    exit();
+}
+
 $email    = trim($_POST['email']);
 $password = $_POST['password'];
 
@@ -36,5 +41,4 @@ if (mysqli_num_rows($hasil) === 1) {
     header("Location: login.php?error=Email tidak terdaftar.");
     exit();
 }
-
 ?>

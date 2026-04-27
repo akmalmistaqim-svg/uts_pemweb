@@ -1,5 +1,7 @@
 <?php
-session_start();
+require_once 'koneksi.php';
+require_once 'session_handler.php';
+
 if (isset($_SESSION['nama'])) {
     header("Location: dashboard.php");
     exit();
