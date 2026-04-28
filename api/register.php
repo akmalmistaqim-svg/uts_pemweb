@@ -12,54 +12,6 @@ if (isset($_SESSION['nama'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
   <title>Daftar - Sistem Prediksi Cuaca</title>
-
-  <!-- Flatpickr CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
-  <style>
-    /* Override Flatpickr agar sesuai style Tailwind */
-    .flatpickr-input {
-      display: block;
-      width: 100%;
-      border-radius: 0.375rem;
-      background-color: white;
-      padding: 0.375rem 0.75rem;
-      font-size: 1rem;
-      color: #111827;
-      border: 1px solid #d1d5db;
-      outline: none;
-      font-size: 0.875rem;
-      cursor: pointer;
-    }
-    .flatpickr-input:focus {
-      ring: 2px;
-      border-color: #4f46e5;
-      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
-    }
-    .flatpickr-day.selected,
-    .flatpickr-day.selected:hover {
-      background: #4f46e5;
-      border-color: #4f46e5;
-    }
-    .flatpickr-day:hover {
-      background: #e0e7ff;
-    }
-    .flatpickr-months .flatpickr-month {
-      background: #4f46e5;
-    }
-    .flatpickr-current-month .flatpickr-monthDropdown-months,
-    .flatpickr-current-month input.cur-year {
-      color: white;
-    }
-    .flatpickr-weekday {
-      color: #4f46e5;
-      font-weight: 600;
-    }
-    .flatpickr-prev-month svg,
-    .flatpickr-next-month svg {
-      fill: white;
-    }
-  </style>
 </head>
 
 <body class="bg-sky-600">
@@ -96,16 +48,10 @@ if (isset($_SESSION['nama'])) {
         <div>
           <label for="tanggal_lahir" class="block text-sm font-medium text-gray-900">Tanggal Lahir</label>
           <div class="mt-2">
-            <!-- Hidden input untuk nilai yang dikirim ke server (format YYYY-MM-DD) -->
-            <input id="tanggal_lahir" type="hidden" name="tanggal_lahir" required />
-            <!-- Input yang tampil ke user (format DD/MM/YYYY) -->
-            <input id="tanggal_lahir_display"
-              type="text"
-              placeholder="DD/MM/YYYY"
-              readonly
+            <input id="tanggal_lahir" type="date" name="tanggal_lahir" required autocomplete="bday"
               class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900
               border border-gray-300 placeholder:text-gray-400
-              focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm cursor-pointer" />
+              focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm" />
           </div>
         </div>
 
@@ -158,36 +104,6 @@ if (isset($_SESSION['nama'])) {
 
     </div>
   </div>
-
-  <!-- Flatpickr JS -->
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script>
-    flatpickr("#tanggal_lahir_display", {
-      dateFormat: "d/m/Y",         // tampilan ke user: DD/MM/YYYY
-      maxDate: "today",            // tidak bisa pilih tanggal masa depan
-      disableMobile: true,         // gunakan flatpickr di mobile, bukan native picker
-      onChange: function(selectedDates, dateStr, instance) {
-        // Simpan ke hidden input dengan format YYYY-MM-DD untuk dikirim ke server
-        if (selectedDates.length > 0) {
-          const d = selectedDates[0];
-          const yyyy = d.getFullYear();
-          const mm = String(d.getMonth() + 1).padStart(2, '0');
-          const dd = String(d.getDate()).padStart(2, '0');
-          document.getElementById('tanggal_lahir').value = `${yyyy}-${mm}-${dd}`;
-        }
-      }
-    });
-
-    // Validasi: pastikan tanggal lahir diisi sebelum submit
-    document.querySelector('form').addEventListener('submit', function(e) {
-      const tgl = document.getElementById('tanggal_lahir').value;
-      if (!tgl) {
-        e.preventDefault();
-        alert('Tanggal lahir wajib diisi!');
-        document.getElementById('tanggal_lahir_display').focus();
-      }
-    });
-  </script>
 
 </body>
 </html>
