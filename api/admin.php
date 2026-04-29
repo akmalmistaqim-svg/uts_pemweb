@@ -8,7 +8,6 @@ if (!isset($_SESSION['id_pengguna']) || $_SESSION['role'] !== 'admin') {
 
 require_once 'koneksi.php';
 
-// Ambil semua data pengguna, diurutkan berdasarkan id terlama (ascending)
 $query    = "SELECT * FROM pengguna ORDER BY id ASC";
 $pengguna = mysqli_query($koneksi, $query);
 ?>
@@ -139,8 +138,6 @@ $pengguna = mysqli_query($koneksi, $query);
 
   </div>
 
-  // Hamburger menu toggle untuk tampilan mobile
-  // Setiap klik akan toggle class 'hidden' pada menu, dan animasi ikon hamburger → X
   <script>
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
