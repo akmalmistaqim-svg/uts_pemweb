@@ -13,6 +13,10 @@ if (!isset($_SESSION['id_pengguna'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Prediksi Cuaca - CuacaKu</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Flatpickr CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
   <style type="text/tailwindcss">
     html { scroll-behavior: smooth; }
     .hasil { display: none; }
@@ -22,6 +26,48 @@ if (!isset($_SESSION['id_pengguna'])) {
       to   { opacity: 1; transform: translateY(0); }
     }
     .animasi-muncul { animation: munculAtas 0.5s ease forwards; }
+  </style>
+
+  <style>
+    .flatpickr-input {
+      display: block;
+      width: 100%;
+      border-radius: 0.375rem;
+      background-color: white;
+      padding: 0.375rem 0.75rem;
+      color: #111827;
+      border: 1px solid #d1d5db;
+      outline: none;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    .flatpickr-input:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
+    }
+    .flatpickr-day.selected,
+    .flatpickr-day.selected:hover {
+      background: #4f46e5;
+      border-color: #4f46e5;
+    }
+    .flatpickr-day:hover {
+      background: #e0e7ff;
+    }
+    .flatpickr-months .flatpickr-month {
+      background: #4f46e5;
+    }
+    .flatpickr-current-month .flatpickr-monthDropdown-months,
+    .flatpickr-current-month input.cur-year {
+      color: white;
+    }
+    .flatpickr-weekday {
+      color: #4f46e5;
+      font-weight: 600;
+    }
+    .flatpickr-prev-month svg,
+    .flatpickr-next-month svg {
+      fill: white;
+    }
   </style>
 </head>
 
@@ -61,25 +107,30 @@ if (!isset($_SESSION['id_pengguna'])) {
       <div class="mb-5">
         <label class="block text-sm font-medium text-gray-700 mb-2">📍 Daerah / Kota</label>
         <select id="inputDaerah"
-  class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white text-gray-700
-  focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none bg-white">
-  <option value="">-- Pilih Daerah --</option>
-</select>
-
+          class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white text-gray-700
+          focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none bg-white">
+          <option value="">-- Pilih Daerah --</option>
+        </select>
       </div>
 
       <div class="mb-6">
         <label class="block text-sm font-medium text-gray-700 mb-2">📅 Tanggal Prediksi</label>
-        <input type="date" id="inputTanggal"
+        <!-- Hidden input untuk nilai yang diproses (format YYYY-MM-DD) -->
+        <input type="hidden" id="inputTanggal" />
+        <!-- Input yang tampil ke user (format DD/MM/YYYY) -->
+        <input id="inputTanggal_display"
+          type="text"
+          placeholder="DD/MM/YYYY"
+          readonly
           class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl
-          text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+          text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer bg-white" />
       </div>
 
       <button onclick="cekPrediksi()"
-  class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm
-  font-semibold text-white hover:bg-indigo-500 transition-colors mt-1">
-  Hasilnya
-</button>
+        class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm
+        font-semibold text-white hover:bg-indigo-500 transition-colors mt-1">
+        Hasilnya
+      </button>
 
       <p id="pesanError" class="text-red-500 text-sm text-center mt-3 hidden">
         ⚠️ Mohon isi daerah dan tanggal terlebih dahulu.
@@ -122,9 +173,9 @@ if (!isset($_SESSION['id_pengguna'])) {
           <p class="text-xs text-gray-500 mb-1">🌧️ Peluang Hujan</p>
           <p id="hasilHujan" class="text-xl font-bold text-gray-900">20%</p>
         </div>
-       <div class="bg-white rounded-2xl p-4 border border-sky-200">
-         <p class="text-xs text-gray-500 mb-1">🌡️ Tekanan Udara</p>
-         <p id="hasilUV" class="text-xl font-bold text-gray-900">-</p>
+        <div class="bg-white rounded-2xl p-4 border border-sky-200">
+          <p class="text-xs text-gray-500 mb-1">🌡️ Tekanan Udara</p>
+          <p id="hasilUV" class="text-xl font-bold text-gray-900">-</p>
         </div>
       </div>
 
@@ -157,17 +208,30 @@ if (!isset($_SESSION['id_pengguna'])) {
 
   <script src="../javascript/cuaca.js"></script>
 
-
+  <!-- Flatpickr JS -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
+    flatpickr("#inputTanggal_display", {
+      dateFormat: "d/m/Y",
+      disableMobile: true,
+      onChange: function(selectedDates, dateStr, instance) {
+        if (selectedDates.length > 0) {
+          const d = selectedDates[0];
+          const yyyy = d.getFullYear();
+          const mm = String(d.getMonth() + 1).padStart(2, '0');
+          const dd = String(d.getDate()).padStart(2, '0');
+          document.getElementById('inputTanggal').value = `${yyyy}-${mm}-${dd}`;
+        }
+      }
+    });
+
     // ambil data kota Jawa Timur dari API BPS
     fetch('ambilKota.php')
       .then(res => res.json())
       .then(data => {
         const select = document.getElementById('inputDaerah');
         data.forEach(item => {
-
           if (item.domain_name === 'Jawa Timur') return;
-          // bersihkan nama kota (hapus "Kabupaten" / "Kota")
           var nama = item.domain_name
             .replace('Kabupaten ', '')
             .replace('Kota ', '');
@@ -177,6 +241,7 @@ if (!isset($_SESSION['id_pengguna'])) {
           select.appendChild(option);
         });
       });
-</script>
+  </script>
+
 </body>
 </html>
