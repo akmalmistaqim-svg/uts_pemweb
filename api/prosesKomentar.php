@@ -7,8 +7,6 @@ if (!isset($_SESSION['id_pengguna'])) {
     exit();
 }
 
-require_once 'koneksi.php';
-
 $id_pengguna  = $_SESSION['id_pengguna'];
 $nama         = $_SESSION['nama'];
 $kota         = trim($_POST['kota']);

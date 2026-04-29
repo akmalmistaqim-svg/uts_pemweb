@@ -131,7 +131,6 @@ if (!isset($_SESSION['id_pengguna'])) {
       </div>
     </div>
   </section>
-
   <!-- section data iklim BPS -->
   <section id="dataiklim" class="py-16 px-6 bg-white">
     <div class="max-w-4xl mx-auto">
@@ -147,7 +146,7 @@ if (!isset($_SESSION['id_pengguna'])) {
   <footer class="bg-sky-400 border-t border-sky-500 py-8 px-6 text-center">
     <p class="text-sm text-sky-100">© 2026 CuacaKu. Sistem Prediksi Cuaca Jawa Timur.</p>
   </footer>
-
+  
   <script>
     // Hamburger toggle
     const hamburger = document.getElementById('hamburger');

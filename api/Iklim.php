@@ -14,7 +14,7 @@ if ($response === FALSE) {
 
 $data = json_decode($response, true);
 
-// ✅ ambil langsung (tanpa foreach)
+// ambil langsung (tanpa foreach)
 if (!isset($data['data']['table'])) {
     echo json_encode([
         "error" => "Tabel tidak ditemukan",

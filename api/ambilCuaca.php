@@ -1,4 +1,5 @@
 <?php
+// Memberitahu browser bahwa response ini berformat JSON
 header('Content-Type: application/json');
 
 $apikey = "f7652f135c9a5c247ef630ab130d60e8";
@@ -26,5 +27,6 @@ if ($data['cod'] != 200) {
     exit;
 }
 
+// Kembalikan seluruh data cuaca mentah ke client 
 echo json_encode($data);
 ?>
