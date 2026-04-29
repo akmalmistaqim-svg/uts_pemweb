@@ -19,18 +19,43 @@ if (!isset($_SESSION['id_pengguna'])) {
 
   <!-- navbar -->
   <nav class="bg-sky-200 fixed w-full z-20 top-0 border-b border-sky-300">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-6 py-4">
+    <div class="max-w-screen-xl flex items-center justify-between mx-auto px-6 py-4">
+      <!-- Logo -->
       <a href="dashboard.php" class="flex items-center gap-3">
         <img src="../1f324_3d.webp" class="h-7" alt="Logo Cuaca" />
         <span class="text-xl text-gray-900 font-semibold whitespace-nowrap">Website Prediksi Cuaca</span>
       </a>
-      <div class="flex items-center gap-6">
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center gap-6">
         <ul class="flex flex-row font-medium gap-8">
           <li><a href="dashboard.php" class="text-gray-700 hover:text-blue-600 transition-colors">Home</a></li>
           <li><a href="dashboard.php#tentang" class="text-gray-700 hover:text-blue-600 transition-colors">Tentang</a></li>
           <li><a href="dashboard.php#dataiklim" class="text-gray-700 hover:text-blue-600 transition-colors">Data Iklim</a></li>
         </ul>
-        <!-- tampilkan nama user dari session -->
+        <span class="text-sm text-gray-600">👋 <?php echo htmlspecialchars($_SESSION['nama']); ?></span>
+        <a href="logout.php"
+          class="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl transition-colors">
+          Logout
+        </a>
+      </div>
+
+      <!-- Hamburger Button (mobile only) -->
+      <button id="hamburger" class="md:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8">
+        <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300" id="bar1"></span>
+        <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300" id="bar2"></span>
+        <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300" id="bar3"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="md:hidden hidden px-6 pb-4 border-t border-sky-300 bg-sky-200">
+      <ul class="flex flex-col font-medium gap-3 pt-4">
+        <li><a href="dashboard.php" class="block text-gray-700 hover:text-blue-600 transition-colors">Home</a></li>
+        <li><a href="dashboard.php#tentang" class="block text-gray-700 hover:text-blue-600 transition-colors">Tentang</a></li>
+        <li><a href="dashboard.php#dataiklim" class="block text-gray-700 hover:text-blue-600 transition-colors">Data Iklim</a></li>
+      </ul>
+      <div class="border-t border-sky-300 mt-4 pt-4 flex items-center justify-between">
         <span class="text-sm text-gray-600">👋 <?php echo htmlspecialchars($_SESSION['nama']); ?></span>
         <a href="logout.php"
           class="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl transition-colors">
@@ -123,34 +148,62 @@ if (!isset($_SESSION['id_pengguna'])) {
     <p class="text-sm text-sky-100">© 2026 CuacaKu. Sistem Prediksi Cuaca Jawa Timur.</p>
   </footer>
 
-          <script>
-        fetch('Iklim.php')
-          .then(res => res.text())
-          .then(text => {
-            const data = JSON.parse(text);
-            if (data.status === 'OK') {
-              const tabelBersih = data.tabel
-                .replace(/\\r\\n/g, '')
-                .replace(/\\t/g, '')
-                .replace(/\\"/g, '"');
-              document.getElementById('tabelIklim').innerHTML = `
-                <style>
-                  #tabelIklim table { width:100%; border-collapse:collapse; font-size:13px; }
-                  #tabelIklim th { background:#0ea5e9; color:white; padding:10px; text-align:center; }
-                  #tabelIklim td { padding:8px 12px; border:1px solid #e0f2fe; text-align:center; }
-                  #tabelIklim tr:nth-child(even) { background:#f0f9ff; }
-                </style>
-                ${tabelBersih}
-              `;
-            } else {
-              document.getElementById('tabelIklim').innerHTML = '<p class="text-center text-red-400">Gagal memuat data.</p>';
-            }
-          })
-          .catch(err => {
-            console.error(err);
-            document.getElementById('tabelIklim').innerHTML = '<p class="text-center text-red-400">Terjadi kesalahan.</p>';
-          });
-        </script>
+  <script>
+    // Hamburger toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const bar1 = document.getElementById('bar1');
+    const bar2 = document.getElementById('bar2');
+    const bar3 = document.getElementById('bar3');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      // animasi X
+      bar1.classList.toggle('rotate-45');
+      bar1.classList.toggle('translate-y-2');
+      bar2.classList.toggle('opacity-0');
+      bar3.classList.toggle('-rotate-45');
+      bar3.classList.toggle('-translate-y-2');
+    });
+
+    // tutup menu saat link diklik
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        bar1.classList.remove('rotate-45', 'translate-y-2');
+        bar2.classList.remove('opacity-0');
+        bar3.classList.remove('-rotate-45', '-translate-y-2');
+      });
+    });
+
+    // Data iklim
+    fetch('Iklim.php')
+      .then(res => res.text())
+      .then(text => {
+        const data = JSON.parse(text);
+        if (data.status === 'OK') {
+          const tabelBersih = data.tabel
+            .replace(/\\r\\n/g, '')
+            .replace(/\\t/g, '')
+            .replace(/\\"/g, '"');
+          document.getElementById('tabelIklim').innerHTML = `
+            <style>
+              #tabelIklim table { width:100%; border-collapse:collapse; font-size:13px; }
+              #tabelIklim th { background:#0ea5e9; color:white; padding:10px; text-align:center; }
+              #tabelIklim td { padding:8px 12px; border:1px solid #e0f2fe; text-align:center; }
+              #tabelIklim tr:nth-child(even) { background:#f0f9ff; }
+            </style>
+            ${tabelBersih}
+          `;
+        } else {
+          document.getElementById('tabelIklim').innerHTML = '<p class="text-center text-red-400">Gagal memuat data.</p>';
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        document.getElementById('tabelIklim').innerHTML = '<p class="text-center text-red-400">Terjadi kesalahan.</p>';
+      });
+  </script>
 
 </body>
 </html>
