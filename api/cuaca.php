@@ -75,12 +75,33 @@ if (!isset($_SESSION['id_pengguna'])) {
 
   <!-- navbar -->
   <nav class="bg-sky-200 fixed w-full z-20 top-0 border-b border-sky-300">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-6 py-4">
+    <div class="max-w-screen-xl flex items-center justify-between mx-auto px-6 py-4">
+      <!-- Logo -->
       <a href="dashboard.php" class="flex items-center gap-3">
         <img src="../1f324_3d.webp" class="h-7" alt="Logo Cuaca" />
         <span class="text-xl text-gray-900 font-semibold whitespace-nowrap">Website Prediksi Cuaca</span>
       </a>
-      <div class="flex items-center gap-6">
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center gap-6">
+        <span class="text-sm text-gray-600">👋 <?php echo htmlspecialchars($_SESSION['nama']); ?></span>
+        <a href="logout.php"
+          class="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl transition-colors">
+          Logout
+        </a>
+      </div>
+
+      <!-- Hamburger Button (mobile only) -->
+      <button id="hamburger" class="md:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8">
+        <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300" id="bar1"></span>
+        <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300" id="bar2"></span>
+        <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300" id="bar3"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="md:hidden hidden px-6 pb-4 border-t border-sky-300 bg-sky-200">
+      <div class="flex items-center justify-between pt-4">
         <span class="text-sm text-gray-600">👋 <?php echo htmlspecialchars($_SESSION['nama']); ?></span>
         <a href="logout.php"
           class="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl transition-colors">
@@ -115,9 +136,7 @@ if (!isset($_SESSION['id_pengguna'])) {
 
       <div class="mb-6">
         <label class="block text-sm font-medium text-gray-700 mb-2">📅 Tanggal Prediksi</label>
-        <!-- Hidden input untuk nilai yang diproses (format YYYY-MM-DD) -->
         <input type="hidden" id="inputTanggal" />
-        <!-- Input yang tampil ke user (format DD/MM/YYYY) -->
         <input id="inputTanggal_display"
           type="text"
           placeholder="DD/MM/YYYY"
@@ -211,6 +230,23 @@ if (!isset($_SESSION['id_pengguna'])) {
   <!-- Flatpickr JS -->
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
+    // Hamburger toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const bar1 = document.getElementById('bar1');
+    const bar2 = document.getElementById('bar2');
+    const bar3 = document.getElementById('bar3');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      bar1.classList.toggle('rotate-45');
+      bar1.classList.toggle('translate-y-2');
+      bar2.classList.toggle('opacity-0');
+      bar3.classList.toggle('-rotate-45');
+      bar3.classList.toggle('-translate-y-2');
+    });
+
+    // Flatpickr
     flatpickr("#inputTanggal_display", {
       dateFormat: "d/m/Y",
       disableMobile: true,
