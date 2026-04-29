@@ -76,13 +76,10 @@ if (!isset($_SESSION['id_pengguna'])) {
       </div>
 
       <button onclick="cekPrediksi()"
-        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-xl
-        transition-colors flex items-center justify-center gap-2">
-        Hasilnya
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
-      </button>
+  class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm
+  font-semibold text-white hover:bg-indigo-500 transition-colors mt-1">
+  Hasilnya
+</button>
 
       <p id="pesanError" class="text-red-500 text-sm text-center mt-3 hidden">
         ⚠️ Mohon isi daerah dan tanggal terlebih dahulu.
