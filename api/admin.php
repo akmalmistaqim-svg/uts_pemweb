@@ -8,7 +8,6 @@ if (!isset($_SESSION['id_pengguna']) || $_SESSION['role'] !== 'admin') {
 
 require_once 'koneksi.php';
 
-// ambil semua data pengguna
 $query    = "SELECT * FROM pengguna ORDER BY id ASC";
 $pengguna = mysqli_query($koneksi, $query);
 ?>
@@ -30,7 +29,27 @@ $pengguna = mysqli_query($koneksi, $query);
         <img src="../1f324_3d.webp" class="h-7" alt="Logo Cuaca" />
         <span class="text-xl text-gray-900 font-semibold">CuacaKu — Admin</span>
       </a>
-      <div class="flex items-center gap-4">
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center gap-4">
+        <span class="text-sm text-gray-600">👋 <?php echo htmlspecialchars($_SESSION['nama']); ?></span>
+        <a href="logout.php"
+          class="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl transition-colors">
+          Logout
+        </a>
+      </div>
+
+      <!-- Hamburger Button (mobile only) -->
+      <button id="hamburger" class="md:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8">
+        <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300" id="bar1"></span>
+        <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300" id="bar2"></span>
+        <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300" id="bar3"></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="md:hidden hidden px-6 pb-4 border-t border-sky-300 bg-sky-200">
+      <div class="flex items-center justify-between pt-4">
         <span class="text-sm text-gray-600">👋 <?php echo htmlspecialchars($_SESSION['nama']); ?></span>
         <a href="logout.php"
           class="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl transition-colors">
@@ -44,13 +63,11 @@ $pengguna = mysqli_query($koneksi, $query);
 
   <div class="max-w-5xl mx-auto px-6 py-10">
 
-    <!-- header -->
     <div class="mb-8">
       <h1 class="text-2xl font-bold text-gray-900">Manajemen Pengguna</h1>
       <p class="text-gray-500 text-sm mt-1">Kelola data pengguna yang terdaftar di sistem</p>
     </div>
 
-    <!-- tampilkan pesan sukses/error -->
     <?php if (isset($_GET['sukses'])): ?>
       <div class="bg-green-100 border border-green-300 text-green-700 px-4 py-3 rounded-xl mb-6 text-sm">
         ✅ <?php echo htmlspecialchars($_GET['sukses']); ?>
@@ -63,7 +80,7 @@ $pengguna = mysqli_query($koneksi, $query);
     <?php endif; ?>
 
     <!-- tabel pengguna -->
-    <div class="bg-white rounded-2xl border border-sky-200 shadow-sm overflow-hidden">
+    <div class="bg-white rounded-2xl border border-sky-200 shadow-sm overflow-x-auto">
       <table class="w-full text-sm">
         <thead class="bg-sky-50 border-b border-sky-200">
           <tr>
@@ -92,21 +109,18 @@ $pengguna = mysqli_query($koneksi, $query);
             <td class="px-6 py-4">
               <div class="flex items-center gap-2">
                 <?php if ($row['role'] === 'pengguna'): ?>
-                  <!-- tombol jadikan admin -->
                   <a href="prosesAdmin.php?aksi=jadikan_admin&id=<?php echo $row['id']; ?>"
                     class="text-xs bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded-lg transition-colors"
                     onclick="return confirm('Jadikan <?php echo htmlspecialchars($row['nama']); ?> sebagai admin?')">
                     Jadikan Admin
                   </a>
                 <?php else: ?>
-                  <!-- tombol jadikan pengguna -->
                   <a href="prosesAdmin.php?aksi=jadikan_pengguna&id=<?php echo $row['id']; ?>"
                     class="text-xs bg-gray-400 hover:bg-gray-500 text-white px-3 py-1.5 rounded-lg transition-colors"
                     onclick="return confirm('Jadikan <?php echo htmlspecialchars($row['nama']); ?> sebagai pengguna biasa?')">
                     Jadikan Pengguna
                   </a>
                 <?php endif; ?>
-                <!-- tombol hapus (tidak bisa hapus diri sendiri) -->
                 <?php if ($row['email'] !== $_SESSION['email']): ?>
                   <a href="prosesAdmin.php?aksi=hapus&id=<?php echo $row['id']; ?>"
                     class="text-xs bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg transition-colors"
@@ -123,6 +137,23 @@ $pengguna = mysqli_query($koneksi, $query);
     </div>
 
   </div>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const bar1 = document.getElementById('bar1');
+    const bar2 = document.getElementById('bar2');
+    const bar3 = document.getElementById('bar3');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      bar1.classList.toggle('rotate-45');
+      bar1.classList.toggle('translate-y-2');
+      bar2.classList.toggle('opacity-0');
+      bar3.classList.toggle('-rotate-45');
+      bar3.classList.toggle('-translate-y-2');
+    });
+  </script>
 
 </body>
 </html>
