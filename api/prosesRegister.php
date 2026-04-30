@@ -1,4 +1,5 @@
 <?php
+/**@var mysqli $koneksi */
 // proses/prosesRegister.php
 // file ini menerima data dari form register.php dan menyimpan ke database
 

@@ -1,4 +1,5 @@
 <?php
+/**@var mysqli $koneksi */
 require_once 'koneksi.php';
 require_once 'session_handler.php';
 if (!isset($_SESSION['id_pengguna']) || $_SESSION['role'] !== 'admin') {

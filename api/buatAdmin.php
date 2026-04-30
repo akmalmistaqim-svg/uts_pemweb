@@ -1,4 +1,5 @@
 <?php
+/**@var mysqli $koneksi */
 // buatAdmin.php
 // jalankan file ini SEKALI di browser: localhost/webcuaca/buatAdmin.php
 // setelah admin terbuat, HAPUS file ini dari folder!
