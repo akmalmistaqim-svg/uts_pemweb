@@ -13,10 +13,12 @@ if (isset($_SESSION['nama'])) {
   <script src="https://cdn.tailwindcss.com"></script>
   <title>Daftar - Sistem Prediksi Cuaca</title>
 
-  <!-- Flatpickr CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
   <style>
+    .bg-gradient-cuaca {
+      background: linear-gradient(160deg, #0ea5e9 0%, #38bdf8 50%, #bae6fd 100%);
+    }
     .flatpickr-input {
       display: block;
       width: 100%;
@@ -30,26 +32,26 @@ if (isset($_SESSION['nama'])) {
       cursor: pointer;
     }
     .flatpickr-input:focus {
-      border-color: #4f46e5;
-      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
+      border-color: #0ea5e9;
+      box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.3);
     }
     .flatpickr-day.selected,
     .flatpickr-day.selected:hover {
-      background: #4f46e5;
-      border-color: #4f46e5;
+      background: #0284c7;
+      border-color: #0284c7;
     }
     .flatpickr-day:hover {
-      background: #e0e7ff;
+      background: #e0f2fe;
     }
     .flatpickr-months .flatpickr-month {
-      background: #4f46e5;
+      background: #0284c7;
     }
     .flatpickr-current-month .flatpickr-monthDropdown-months,
     .flatpickr-current-month input.cur-year {
       color: white;
     }
     .flatpickr-weekday {
-      color: #4f46e5;
+      color: #0284c7;
       font-weight: 600;
     }
     .flatpickr-prev-month svg,
@@ -59,7 +61,7 @@ if (isset($_SESSION['nama'])) {
   </style>
 </head>
 
-<body class="bg-sky-600">
+<body class="bg-gradient-cuaca">
 
   <div class="flex min-h-screen flex-col justify-center px-6 py-12 lg:px-8">
 
@@ -70,7 +72,7 @@ if (isset($_SESSION['nama'])) {
       </h2>
     </div>
 
-    <div class="mt-3 sm:mx-auto sm:w-full sm:max-w-sm bg-white px-8 py-10 rounded-2xl shadow-sm">
+    <div class="mt-3 sm:mx-auto sm:w-full sm:max-w-sm bg-white/90 backdrop-blur-sm px-8 py-10 rounded-2xl shadow-lg border border-sky-100">
 
       <?php if (isset($_GET['error'])): ?>
         <p class="text-red-500 text-sm text-center mb-4">
@@ -81,74 +83,73 @@ if (isset($_SESSION['nama'])) {
       <form action="prosesRegister.php" method="POST" class="space-y-5">
 
         <div>
-          <label for="nama" class="block text-sm font-medium text-gray-900">Nama Lengkap</label>
+          <label for="nama" class="block text-sm font-medium text-sky-900">Nama Lengkap</label>
           <div class="mt-2">
             <input id="nama" type="text" name="nama" required autocomplete="name"
               class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900
-              border border-gray-300 placeholder:text-gray-400
-              focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm" />
+              border border-sky-200 placeholder:text-gray-400
+              focus:outline-none focus:ring-2 focus:ring-sky-500 sm:text-sm" />
           </div>
         </div>
 
         <div>
-          <label for="tanggal_lahir" class="block text-sm font-medium text-gray-900">Tanggal Lahir</label>
+          <label for="tanggal_lahir" class="block text-sm font-medium text-sky-900">Tanggal Lahir</label>
           <div class="mt-2">
-            <!-- Hidden input untuk nilai yang dikirim ke server (format YYYY-MM-DD) -->
             <input id="tanggal_lahir" type="hidden" name="tanggal_lahir" />
-            <!-- Input yang tampil ke user (format DD/MM/YYYY) -->
             <input id="tanggal_lahir_display"
               type="text"
               placeholder="DD/MM/YYYY"
               readonly
               class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900
-              border border-gray-300 placeholder:text-gray-400
-              focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm cursor-pointer" />
+              border border-sky-200 placeholder:text-gray-400
+              focus:outline-none focus:ring-2 focus:ring-sky-500 sm:text-sm cursor-pointer" />
           </div>
         </div>
 
         <div>
-          <label for="email" class="block text-sm font-medium text-gray-900">Email</label>
+          <label for="email" class="block text-sm font-medium text-sky-900">Email</label>
           <div class="mt-2">
             <input id="email" type="email" name="email" required autocomplete="email"
               class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900
-              border border-gray-300 placeholder:text-gray-400
-              focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm" />
+              border border-sky-200 placeholder:text-gray-400
+              focus:outline-none focus:ring-2 focus:ring-sky-500 sm:text-sm" />
           </div>
         </div>
 
         <div>
-          <label for="password" class="block text-sm font-medium text-gray-900">Kata Sandi</label>
+          <label for="password" class="block text-sm font-medium text-sky-900">Kata Sandi</label>
           <div class="mt-2">
             <input id="password" type="password" name="password" required autocomplete="new-password"
               class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900
-              border border-gray-300 placeholder:text-gray-400
-              focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm" />
+              border border-sky-200 placeholder:text-gray-400
+              focus:outline-none focus:ring-2 focus:ring-sky-500 sm:text-sm" />
           </div>
         </div>
 
         <div>
-          <label for="konfirm_password" class="block text-sm font-medium text-gray-900">Konfirmasi Kata Sandi</label>
+          <label for="konfirm_password" class="block text-sm font-medium text-sky-900">Konfirmasi Kata Sandi</label>
           <div class="mt-2">
             <input id="konfirm_password" type="password" name="konfirm_password" required autocomplete="new-password"
               class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900
-              border border-gray-300 placeholder:text-gray-400
-              focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm" />
+              border border-sky-200 placeholder:text-gray-400
+              focus:outline-none focus:ring-2 focus:ring-sky-500 sm:text-sm" />
           </div>
         </div>
 
         <div>
           <button type="submit"
-            class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm
-            font-semibold text-white hover:bg-indigo-500 transition-colors mt-1">
+            class="flex w-full justify-center rounded-md px-3 py-1.5 text-sm
+            font-semibold text-white transition-colors shadow-md mt-1"
+            style="background: linear-gradient(90deg, #0284c7, #38bdf8);">
             Daftar
           </button>
         </div>
 
       </form>
 
-      <p class="mt-8 text-center text-sm text-gray-500">
+      <p class="mt-8 text-center text-sm text-sky-700">
         Sudah punya akun?
-        <a href="login.php" class="font-semibold text-indigo-600 hover:text-indigo-500">
+        <a href="login.php" class="font-semibold text-sky-600 hover:text-sky-500">
           Masuk di sini
         </a>
       </p>
@@ -156,7 +157,6 @@ if (isset($_SESSION['nama'])) {
     </div>
   </div>
 
-  <!-- Flatpickr JS -->
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
     flatpickr("#tanggal_lahir_display", {
