@@ -236,8 +236,8 @@
       // Step 1: Geocoding - cari koordinat kota
       const geoRes = await fetch(
         'https://geocoding-api.open-meteo.com/v1/search?name=' +
-        encodeURIComponent(kota + ' Jawa Timur Indonesia') +
-        '&count=5&language=id&format=json'
+        encodeURIComponent(kota) +
+        '&count=10&language=id&format=json&countryCode=ID'
       );
       const geoData = await geoRes.json();
 
