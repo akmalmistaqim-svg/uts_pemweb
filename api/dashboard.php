@@ -117,6 +117,7 @@ if (!isset($_SESSION['id_pengguna'])) {
       <div class="hidden md:flex items-center gap-6">
         <ul class="flex flex-row font-medium gap-8">
           <li><a href="dashboard.php" class="text-white hover:text-yellow-200 transition-colors">Home</a></li>
+          <li><a href="dashboard.php#grafik" class="text-white hover:text-yellow-200 transition-colors">Grafik Cuaca</a></li>
           <li><a href="dashboard.php#tentang" class="text-white hover:text-yellow-200 transition-colors">Tentang</a></li>
           <li><a href="dashboard.php#dataiklim" class="text-white hover:text-yellow-200 transition-colors">Data Iklim</a></li>
         </ul>
@@ -135,6 +136,7 @@ if (!isset($_SESSION['id_pengguna'])) {
     <div id="mobileMenu" class="md:hidden hidden px-6 pb-4 border-t border-white/20" style="background: rgba(2,132,199,0.95)">
       <ul class="flex flex-col font-medium gap-3 pt-4">
         <li><a href="dashboard.php" class="block text-white hover:text-yellow-200 transition-colors">Home</a></li>
+        <li><a href="dashboard.php#grafik" class="block text-white hover:text-yellow-200 transition-colors">Grafik Cuaca</a></li>
         <li><a href="dashboard.php#tentang" class="block text-white hover:text-yellow-200 transition-colors">Tentang</a></li>
         <li><a href="dashboard.php#dataiklim" class="block text-white hover:text-yellow-200 transition-colors">Data Iklim</a></li>
       </ul>
@@ -174,6 +176,8 @@ if (!isset($_SESSION['id_pengguna'])) {
     </div>
 
   </section>
+
+  <?php include 'api/grafik.php'; ?>
 
   <!-- section tentang -->
   <section id="tentang" class="section-tentang py-16 px-6">
