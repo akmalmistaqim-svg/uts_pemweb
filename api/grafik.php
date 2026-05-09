@@ -1,12 +1,3 @@
-<!-- ====================================================
-     SECTION GRAFIK CUACA - CuacaKu
-     Taruh include ini di dashboard.php SEBELUM section tentang:
-     <?php include 'grafik.php'; ?>
-     ==================================================== -->
-
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-
 <style>
   .section-grafik {
     background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
@@ -173,6 +164,8 @@
     .grafik-canvas-wrap { height: 230px; }
   }
 </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 
 <section id="grafik" class="section-grafik">
   <div class="max-w-4xl mx-auto">
