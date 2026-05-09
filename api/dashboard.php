@@ -37,7 +37,7 @@ if (!isset($_SESSION['id_pengguna'])) {
     /* HERO */
     .section-hero {
       position: relative;
-      background: url('fotoLangit.jpg') center center / cover no-repeat;
+      background: url('../fotoLangit.jpg') center center / cover no-repeat;
     }
     .section-hero::before {
       content: '';
