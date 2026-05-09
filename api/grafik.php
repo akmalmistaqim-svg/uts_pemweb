@@ -258,36 +258,52 @@
       const lat = lokasi.latitude;
       const lon = lokasi.longitude;
 
-      // Step 2: Ambil forecast 16 hari (untuk harian & mingguan)
+      // Step 2: Ambil forecast 7 hari (untuk harian)
       const forecastRes = await fetch(
         'https://api.open-meteo.com/v1/forecast?' +
         'latitude=' + lat + '&longitude=' + lon +
         '&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,relative_humidity_2m_mean,weathercode' +
         '&timezone=Asia%2FJakarta' +
-        '&forecast_days=16'
+        '&forecast_days=7'
       );
       const forecastData = await forecastRes.json();
 
-      // Step 3: Ambil data historis 12 bulan (untuk bulanan)
+      // Step 3: Ambil 28 hari historis (untuk mingguan) + 12 bulan (untuk bulanan)
       const today = new Date();
       const endDate = today.toISOString().split('T')[0];
-      const startDate = new Date(today.getFullYear() - 1, today.getMonth() + 1, 1)
+
+      const start28 = new Date(today);
+      start28.setDate(today.getDate() - 28);
+      const startDate28 = start28.toISOString().split('T')[0];
+
+      const startBulanan = new Date(today.getFullYear() - 1, today.getMonth() + 1, 1)
         .toISOString().split('T')[0];
 
-      const histRes = await fetch(
-        'https://archive-api.open-meteo.com/v1/archive?' +
-        'latitude=' + lat + '&longitude=' + lon +
-        '&start_date=' + startDate + '&end_date=' + endDate +
-        '&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,relative_humidity_2m_mean' +
-        '&timezone=Asia%2FJakarta'
-      );
-      const histData = await histRes.json();
+      const [hist28Res, histBulananRes] = await Promise.all([
+        fetch(
+          'https://archive-api.open-meteo.com/v1/archive?' +
+          'latitude=' + lat + '&longitude=' + lon +
+          '&start_date=' + startDate28 + '&end_date=' + endDate +
+          '&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,relative_humidity_2m_mean' +
+          '&timezone=Asia%2FJakarta'
+        ),
+        fetch(
+          'https://archive-api.open-meteo.com/v1/archive?' +
+          'latitude=' + lat + '&longitude=' + lon +
+          '&start_date=' + startBulanan + '&end_date=' + endDate +
+          '&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,relative_humidity_2m_mean' +
+          '&timezone=Asia%2FJakarta'
+        )
+      ]);
+
+      const hist28Data = await hist28Res.json();
+      const histBulananData = await histBulananRes.json();
 
       // Olah data
       grafikDataCache = {
         harian: olaHarian(forecastData.daily),
-        mingguan: olahMingguan(forecastData.daily),
-        bulanan: olahBulanan(histData.daily)
+        mingguan: olahMingguan(hist28Data.daily),
+        bulanan: olahBulanan(histBulananData.daily)
       };
 
       grafikTabAktif = 'harian';
