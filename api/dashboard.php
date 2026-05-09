@@ -177,7 +177,7 @@ if (!isset($_SESSION['id_pengguna'])) {
 
   </section>
 
-  <?php include 'grafik.php'; ?>
+  <?php // include 'grafik.php'; ?>
 
   <!-- section tentang -->
   <section id="tentang" class="section-tentang py-16 px-6">
