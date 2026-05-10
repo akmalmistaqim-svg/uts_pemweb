@@ -95,6 +95,17 @@ else if (iconCode.includes('11')) emoji = "⛈️";
 
    // simpan kota ke session supaya muncul di kabar_sekitar.php
       fetch('../api/simpanKota.php?kota=' + encodeURIComponent(daerah));
+      // simpan riwayat prediksi ke database
+      fetch('../api/simpanRiwayat.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          kota: daerah,
+          tanggal: tanggal,
+          kondisi: kondisi,
+          suhu: suhu
+        })
+      });
 
     })
     .catch(err => {

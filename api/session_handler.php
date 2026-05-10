@@ -1,4 +1,5 @@
 <?php
+/**@var mysqli $koneksi */
 require_once 'koneksi.php';
 
 class DbSession {
