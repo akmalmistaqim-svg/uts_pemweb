@@ -34,13 +34,18 @@ function cekPrediksi() {
       // Cari index data sesuai tanggal yang dipilih
 var list = cuaca.list;
 var idx  = 0;
-if (tanggal) {
+if (tanggal && list) {
   for (var i = 0; i < list.length; i++) {
     if (list[i].dt_txt.startsWith(tanggal)) {
       idx = i;
       break;
     }
   }
+}
+
+// Kalau tanggal di luar 5 hari, pakai data terakhir yang ada
+if (!list || !list[idx]) {
+  idx = list.length - 1;
 }
 
 var item    = list[idx];
