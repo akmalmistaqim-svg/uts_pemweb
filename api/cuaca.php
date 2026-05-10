@@ -29,6 +29,74 @@ if (!isset($_SESSION['id_pengguna'])) {
   </style>
 
   <style>
+    body {
+      background: linear-gradient(160deg, #0ea5e9 0%, #38bdf8 50%, #bae6fd 100%);
+      min-height: 100vh;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      background: rgba(2, 132, 199, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.12);
+    }
+    .btn-logout {
+      border: 2px solid rgba(255,255,255,0.75);
+      color: white;
+      border-radius: 999px;
+      padding: 0.3rem 1.1rem;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+    }
+    .btn-logout:hover { background: rgba(255,255,255,0.2); }
+
+    /* HERO */
+    .section-hero {
+      position: relative;
+      background: url('fotoLangit.jpg') center center / cover no-repeat;
+    }
+    .section-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(14,165,233,0.82) 0%, rgba(56,189,248,0.75) 50%, rgba(186,230,253,0.65) 100%);
+      z-index: 0;
+    }
+    .hero-circles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .hero-circles span {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* FORM SECTION */
+    .section-form {
+      background: #ffffff;
+    }
+
+    /* HASIL SECTION */
+    .section-hasil {
+      background: #f4f6fa;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: linear-gradient(160deg, #0c4a6e 0%, #075985 100%);
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Flatpickr */
     .flatpickr-input {
       display: block;
       width: 100%;
@@ -71,158 +139,164 @@ if (!isset($_SESSION['id_pengguna'])) {
   </style>
 </head>
 
-<body class="bg-sky-100 text-gray-800 min-h-screen">
+<body class="text-gray-800 min-h-screen">
 
   <!-- navbar -->
-  <nav class="bg-sky-200 fixed w-full z-20 top-0 border-b border-sky-300">
+  <nav class="navbar fixed w-full z-20 top-0">
     <div class="max-w-screen-xl flex items-center justify-between mx-auto px-6 py-4">
-      <!-- Logo -->
       <a href="dashboard.php" class="flex items-center gap-3">
         <img src="../1f324_3d.webp" class="h-7" alt="Logo Cuaca" />
-        <span class="text-xl text-gray-900 font-semibold whitespace-nowrap">Website Prediksi Cuaca</span>
+        <span class="text-xl text-white font-semibold whitespace-nowrap">Website Prediksi Cuaca</span>
       </a>
 
       <!-- Desktop Menu -->
       <div class="hidden md:flex items-center gap-6">
-        <span class="text-sm text-gray-600">👋 <?php echo htmlspecialchars($_SESSION['nama']); ?></span>
-        <a href="logout.php"
-          class="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl transition-colors">
-          Logout
-        </a>
+        <span class="text-sm text-yellow-200 font-medium">👋 <?php echo htmlspecialchars($_SESSION['nama']); ?></span>
+        <a href="logout.php" class="btn-logout">Logout</a>
       </div>
 
       <!-- Hamburger Button (mobile only) -->
       <button id="hamburger" class="md:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8">
-        <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300" id="bar1"></span>
-        <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300" id="bar2"></span>
-        <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300" id="bar3"></span>
+        <span class="block w-6 h-0.5 bg-white transition-all duration-300" id="bar1"></span>
+        <span class="block w-6 h-0.5 bg-white transition-all duration-300" id="bar2"></span>
+        <span class="block w-6 h-0.5 bg-white transition-all duration-300" id="bar3"></span>
       </button>
     </div>
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="md:hidden hidden px-6 pb-4 border-t border-sky-300 bg-sky-200">
+    <div id="mobileMenu" class="md:hidden hidden px-6 pb-4 border-t border-white/20" style="background: rgba(2,132,199,0.95)">
       <div class="flex items-center justify-between pt-4">
-        <span class="text-sm text-gray-600">👋 <?php echo htmlspecialchars($_SESSION['nama']); ?></span>
-        <a href="logout.php"
-          class="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl transition-colors">
-          Logout
-        </a>
+        <span class="text-sm text-yellow-200 font-medium">👋 <?php echo htmlspecialchars($_SESSION['nama']); ?></span>
+        <a href="logout.php" class="btn-logout">Logout</a>
       </div>
     </div>
   </nav>
 
   <div class="h-16"></div>
 
-  <div class="bg-gradient-to-br from-blue-500 to-sky-400 text-white py-14 px-6 text-center">
-    <span class="text-6xl">🔍</span>
-    <h1 class="text-3xl sm:text-4xl font-bold mt-4 mb-2">Cek Prediksi Cuaca</h1>
-    <p class="text-blue-100 text-base max-w-md mx-auto">Masukkan daerah dan tanggal untuk melihat hasil prediksi</p>
-  </div>
+  <!-- hero section -->
+  <section class="section-hero text-white py-14 px-6 text-center">
+    <div class="hero-circles">
+      <span style="width:320px;height:320px;top:-80px;left:-60px;"></span>
+      <span style="width:200px;height:200px;top:40px;right:80px;background:rgba(255,255,255,0.05);"></span>
+      <span style="width:500px;height:500px;bottom:-200px;right:-100px;"></span>
+      <span style="width:150px;height:150px;bottom:20px;left:120px;background:rgba(255,255,255,0.06);"></span>
+    </div>
+    <div class="hero-content">
+      <span class="text-6xl">🔍</span>
+      <h1 class="text-3xl sm:text-4xl font-bold mt-4 mb-2">Cek Prediksi Cuaca</h1>
+      <p class="text-blue-100 text-base max-w-md mx-auto">Masukkan daerah dan tanggal untuk melihat hasil prediksi</p>
+    </div>
+  </section>
 
   <!-- form input -->
-  <div class="max-w-xl mx-auto px-6 py-10">
-    <div class="bg-white rounded-2xl shadow-sm border border-sky-200 p-8">
+  <div class="section-form">
+    <div class="max-w-xl mx-auto px-6 py-10">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
 
-      <h2 class="text-lg font-semibold text-gray-900 mb-6">Isi Data di sini</h2>
+        <h2 class="text-lg font-semibold text-gray-900 mb-6">Isi Data di sini</h2>
 
-      <div class="mb-5">
-        <label class="block text-sm font-medium text-gray-700 mb-2">📍 Daerah / Kota</label>
-        <select id="inputDaerah"
-          class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white text-gray-700
-          focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none bg-white">
-          <option value="">-- Pilih Daerah --</option>
-        </select>
+        <div class="mb-5">
+          <label class="block text-sm font-medium text-gray-700 mb-2">📍 Daerah / Kota</label>
+          <select id="inputDaerah"
+            class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl bg-white text-gray-700
+            focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none bg-white">
+            <option value="">-- Pilih Daerah --</option>
+          </select>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">📅 Tanggal Prediksi</label>
+          <input type="hidden" id="inputTanggal" />
+          <input id="inputTanggal_display"
+            type="text"
+            placeholder="DD/MM/YYYY"
+            readonly
+            class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl
+            text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer bg-white" />
+        </div>
+
+        <button onclick="cekPrediksi()"
+          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm
+          font-semibold text-white hover:bg-indigo-500 transition-colors mt-1">
+          Hasilnya
+        </button>
+
+        <p id="pesanError" class="text-red-500 text-sm text-center mt-3 hidden">
+          ⚠️ Mohon isi daerah dan tanggal terlebih dahulu.
+        </p>
+
       </div>
-
-      <div class="mb-6">
-        <label class="block text-sm font-medium text-gray-700 mb-2">📅 Tanggal Prediksi</label>
-        <input type="hidden" id="inputTanggal" />
-        <input id="inputTanggal_display"
-          type="text"
-          placeholder="DD/MM/YYYY"
-          readonly
-          class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl
-          text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer bg-white" />
-      </div>
-
-      <button onclick="cekPrediksi()"
-        class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm
-        font-semibold text-white hover:bg-indigo-500 transition-colors mt-1">
-        Hasilnya
-      </button>
-
-      <p id="pesanError" class="text-red-500 text-sm text-center mt-3 hidden">
-        ⚠️ Mohon isi daerah dan tanggal terlebih dahulu.
-      </p>
-
     </div>
   </div>
 
   <!-- hasil prediksi -->
-  <div id="hasilPrediksi" class="hasil max-w-xl mx-auto px-6 pb-6">
-    <div class="animasi-muncul">
+  <div id="hasilPrediksi" class="hasil section-hasil">
+    <div class="max-w-xl mx-auto px-6 pb-6 pt-6">
+      <div class="animasi-muncul">
 
-      <div id="cardUtama" class="bg-gradient-to-br from-blue-500 to-sky-400 text-white rounded-2xl p-6 mb-4 shadow-sm">
-        <div class="flex items-center justify-between mb-4">
-          <div>
-            <p class="text-blue-100 text-sm" id="hasilLokasi">📍 Magetan</p>
-            <p class="text-blue-100 text-xs mt-0.5" id="hasilTanggal">Senin, 15 Maret 2025</p>
+        <div id="cardUtama" class="bg-gradient-to-br from-blue-500 to-sky-400 text-white rounded-2xl p-6 mb-4 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <p class="text-blue-100 text-sm" id="hasilLokasi">📍 Magetan</p>
+              <p class="text-blue-100 text-xs mt-0.5" id="hasilTanggal">Senin, 15 Maret 2025</p>
+            </div>
+            <span id="hasilEmoji" class="text-5xl">⛅</span>
           </div>
-          <span id="hasilEmoji" class="text-5xl">⛅</span>
-        </div>
-        <div class="flex items-end gap-3 mb-3">
-          <span id="hasilSuhu" class="text-6xl font-bold">28°</span>
-          <div class="mb-2">
-            <p id="hasilKondisi" class="text-lg font-semibold">Berawan Sebagian</p>
-            <p id="hasilRasa" class="text-blue-200 text-sm">Terasa seperti 30°C</p>
+          <div class="flex items-end gap-3 mb-3">
+            <span id="hasilSuhu" class="text-6xl font-bold">28°</span>
+            <div class="mb-2">
+              <p id="hasilKondisi" class="text-lg font-semibold">Berawan Sebagian</p>
+              <p id="hasilRasa" class="text-blue-200 text-sm">Terasa seperti 30°C</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="grid grid-cols-2 gap-3 mb-4">
-        <div class="bg-white rounded-2xl p-4 border border-sky-200">
-          <p class="text-xs text-gray-500 mb-1">💧 Kelembaban</p>
-          <p id="hasilLembab" class="text-xl font-bold text-gray-900">72%</p>
+        <div class="grid grid-cols-2 gap-3 mb-4">
+          <div class="bg-white rounded-2xl p-4 border border-slate-200">
+            <p class="text-xs text-gray-500 mb-1">💧 Kelembaban</p>
+            <p id="hasilLembab" class="text-xl font-bold text-gray-900">72%</p>
+          </div>
+          <div class="bg-white rounded-2xl p-4 border border-slate-200">
+            <p class="text-xs text-gray-500 mb-1">💨 Kec. Angin</p>
+            <p id="hasilAngin" class="text-xl font-bold text-gray-900">14 km/j</p>
+          </div>
+          <div class="bg-white rounded-2xl p-4 border border-slate-200">
+            <p class="text-xs text-gray-500 mb-1">🌧️ Peluang Hujan</p>
+            <p id="hasilHujan" class="text-xl font-bold text-gray-900">20%</p>
+          </div>
+          <div class="bg-white rounded-2xl p-4 border border-slate-200">
+            <p class="text-xs text-gray-500 mb-1">🌡️ Tekanan Udara</p>
+            <p id="hasilUV" class="text-xl font-bold text-gray-900">-</p>
+          </div>
         </div>
-        <div class="bg-white rounded-2xl p-4 border border-sky-200">
-          <p class="text-xs text-gray-500 mb-1">💨 Kec. Angin</p>
-          <p id="hasilAngin" class="text-xl font-bold text-gray-900">14 km/j</p>
-        </div>
-        <div class="bg-white rounded-2xl p-4 border border-sky-200">
-          <p class="text-xs text-gray-500 mb-1">🌧️ Peluang Hujan</p>
-          <p id="hasilHujan" class="text-xl font-bold text-gray-900">20%</p>
-        </div>
-        <div class="bg-white rounded-2xl p-4 border border-sky-200">
-          <p class="text-xs text-gray-500 mb-1">🌡️ Tekanan Udara</p>
-          <p id="hasilUV" class="text-xl font-bold text-gray-900">-</p>
-        </div>
-      </div>
 
-      <div class="bg-white rounded-2xl p-5 border border-sky-200 mb-4">
-        <h3 class="font-semibold text-gray-900 mb-3">💡 Rekomendasi</h3>
-        <p id="hasilRekomendasi" class="text-sm text-gray-600 leading-relaxed"></p>
-      </div>
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 mb-4">
+          <h3 class="font-semibold text-gray-900 mb-3">💡 Rekomendasi</h3>
+          <p id="hasilRekomendasi" class="text-sm text-gray-600 leading-relaxed"></p>
+        </div>
 
-      <!-- tombol kabar sekitar -->
-      <div class="bg-white rounded-2xl p-5 border border-sky-200 text-center">
-        <p class="text-sm text-gray-500 mb-3">Bagikan kondisi cuaca aktual di daerahmu</p>
-        <a href="kabar_sekitar.php"
-          class="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white
-          font-semibold px-6 py-2.5 rounded-xl transition-colors">
-          💬 Kabar Sekitar
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </a>
-      </div>
+        <!-- tombol kabar sekitar -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 text-center">
+          <p class="text-sm text-gray-500 mb-3">Bagikan kondisi cuaca aktual di daerahmu</p>
+          <a href="kabar_sekitar.php"
+            class="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white
+            font-semibold px-6 py-2.5 rounded-xl transition-colors">
+            💬 Kabar Sekitar
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
 
+      </div>
     </div>
   </div>
 
   <div class="pb-16"></div>
 
-  <footer class="bg-sky-400 border-t border-sky-500 py-8 px-6 text-center">
-    <p class="text-sm text-sky-100">© 2026 CuacaKu. Sistem Prediksi Cuaca Jawa Timur.</p>
+  <footer class="footer py-8 px-6 text-center">
+    <p class="text-sm text-white/90">© 2026 CuacaKu. Sistem Prediksi Cuaca Jawa Timur.</p>
   </footer>
 
   <script src="../javascript/cuaca.js"></script>
