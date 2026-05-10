@@ -11,7 +11,7 @@ if (empty($kota)) {
     exit;
 }
 
-$url = "https://api.openweathermap.org/data/2.5/forecast?q={$kota},ID&appid={$apikey}&units=metric&lang=id";
+$url = "https://api.openweathermap.org/data/2.5/weather?q={$kota},ID&appid={$apikey}&units=metric&lang=id";
 
 $response = @file_get_contents($url);
 
@@ -22,7 +22,7 @@ if ($response === FALSE) {
 
 $data = json_decode($response, true);
 
-if ($data['cod'] != "200") {
+if ($data['cod'] != 200) {
     echo json_encode(["error" => "Kota tidak ditemukan"]);
     exit;
 }
