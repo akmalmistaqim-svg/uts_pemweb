@@ -55,7 +55,7 @@ if (!isset($_SESSION['id_pengguna'])) {
     /* HERO */
     .section-hero {
       position: relative;
-      background: url('fotoLangit.jpg') center center / cover no-repeat;
+      background: url('../fotoLangit.jpg') center center / cover no-repeat;
     }
     .section-hero::before {
       content: '';
@@ -248,7 +248,6 @@ if (!isset($_SESSION['id_pengguna'])) {
             <span id="hasilSuhu" class="text-6xl font-bold">28°</span>
             <div class="mb-2">
               <p id="hasilKondisi" class="text-lg font-semibold">Berawan Sebagian</p>
-              <p id="hasilRasa" class="text-blue-200 text-sm">Terasa seperti 30°C</p>
             </div>
           </div>
         </div>
