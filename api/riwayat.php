@@ -92,8 +92,8 @@ $riwayat = mysqli_query($koneksi, "SELECT * FROM riwayat_prediksi ORDER BY dibua
       <?php else: ?>
         <?php while ($row = mysqli_fetch_assoc($riwayat)): ?>
         <div class="bg-white rounded-2xl border border-sky-200 shadow-sm p-5">
-          <div class="flex items-center justify-between mb-2">
-            <div class="flex items-center gap-3">
+          <div class="flex items-start justify-between mb-2">
+            <div class="flex items-start gap-3">
               <div class="w-9 h-9 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
                 <?php echo strtoupper(substr($row['nama'], 0, 1)); ?>
               </div>
@@ -106,9 +106,9 @@ $riwayat = mysqli_query($koneksi, "SELECT * FROM riwayat_prediksi ORDER BY dibua
                 </p>
               </div>
             </div>
-            <div class="text-right">
+            <div class="text-right flex-shrink-0 max-w-[120px]">
               <p class="text-lg font-bold text-gray-900"><?php echo $row['suhu']; ?>°C</p>
-              <p class="text-xs text-gray-400"><?php echo htmlspecialchars($row['kondisi']); ?></p>
+              <p class="text-xs text-gray-400 leading-tight"><?php echo htmlspecialchars($row['kondisi']); ?></p>
             </div>
           </div>
         </div>
@@ -141,7 +141,7 @@ $riwayat = mysqli_query($koneksi, "SELECT * FROM riwayat_prediksi ORDER BY dibua
 
   </div>
 
-  <footer class="footer py-8 px-6 text-center mt-10">
+  <footer class="footer py-8 px-6 text-center">
     <p class="text-sm text-white/90">© 2026 CuacaKu. Sistem Prediksi Cuaca Jawa Timur.</p>
   </footer>
 
