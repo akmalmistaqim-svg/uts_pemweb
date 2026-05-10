@@ -106,9 +106,8 @@ $riwayat = mysqli_query($koneksi, "SELECT * FROM riwayat_prediksi ORDER BY dibua
                 </p>
               </div>
             </div>
-            <div class="text-right flex-shrink-0 max-w-[120px]">
-              <p class="text-lg font-bold text-gray-900"><?php echo $row['suhu']; ?>°C</p>
-              <p class="text-xs text-gray-400 leading-tight"><?php echo htmlspecialchars($row['kondisi']); ?></p>
+            <div class="text-right flex-shrink-0">
+                <p class="text-lg font-bold text-gray-900"><?php echo $row['suhu']; ?>°C</p>
             </div>
           </div>
         </div>
