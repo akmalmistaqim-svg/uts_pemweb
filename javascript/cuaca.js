@@ -78,7 +78,7 @@ else if (iconCode.includes('11')) emoji = "⛈️";
       document.getElementById('hasilLembab').textContent      = lembab + '%';
       document.getElementById('hasilAngin').textContent       = angin + ' km/j';
       document.getElementById('hasilHujan').textContent       = hujan + '%';
-      document.getElementById('hasilUV').textContent          = cuaca.main.pressure + ' hPa';
+      document.getElementById('hasilUV').textContent = item.main.pressure + ' hPa';
       tampilkanRekomendasiPetani(suhu, lembab, hujan, angin, kondisi, emoji);
 
       // warna card
