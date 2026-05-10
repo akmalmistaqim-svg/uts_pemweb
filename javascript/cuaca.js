@@ -74,7 +74,6 @@ else if (iconCode.includes('11')) emoji = "⛈️";
       document.getElementById('hasilEmoji').textContent       = emoji;
       document.getElementById('hasilSuhu').textContent        = suhu + '°';
       document.getElementById('hasilKondisi').textContent     = kondisi;
-      document.getElementById('hasilRasa').textContent        = 'Terasa seperti ' + rasa + '°C';
       document.getElementById('hasilLembab').textContent      = lembab + '%';
       document.getElementById('hasilAngin').textContent       = angin + ' km/j';
       document.getElementById('hasilHujan').textContent       = hujan + '%';
