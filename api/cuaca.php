@@ -16,6 +16,7 @@ if (!isset($_SESSION['id_pengguna'])) {
 
   <!-- Flatpickr CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 
   <style type="text/tailwindcss">
     html { scroll-behavior: smooth; }
@@ -271,9 +272,62 @@ if (!isset($_SESSION['id_pengguna'])) {
           </div>
         </div>
 
-        <div class="rounded-2xl p-5 border border-slate-200 mb-4" style="background:#f4f6fa;">
-          <h3 class="font-semibold text-gray-900 mb-3">💡 Rekomendasi</h3>
-          <p id="hasilRekomendasi" class="text-sm text-gray-600 leading-relaxed"></p>
+                <!-- REKOMENDASI PETANI -->
+        <div class="rounded-2xl border border-slate-200 mb-4 overflow-hidden" style="background:#f4f6fa;">
+
+          <!-- Tab -->
+          <div class="flex border-b border-slate-200">
+            <button id="tabMinggu" onclick="setTabRek('minggu')"
+              class="flex-1 py-3 text-sm font-semibold text-sky-600 border-b-2 border-sky-500 bg-white transition-all">
+              7 Hari ke Depan
+            </button>
+            <button id="tabBulan" onclick="setTabRek('bulan')"
+              class="flex-1 py-3 text-sm font-semibold text-gray-400 border-b-2 border-transparent transition-all">
+              Bulan Depan
+            </button>
+          </div>
+
+          <!-- Isi Tab Minggu -->
+          <div id="rekMinggu" class="p-5">
+
+            <!-- Banner kondisi -->
+            <div id="rekBanner" class="rounded-xl p-4 mb-4 flex items-center gap-3" style="background:#e8f4fd;">
+              <span id="rekEmojiBanner" class="text-3xl">⛅</span>
+              <div>
+                <p id="rekJudulBanner" class="text-sm font-semibold text-blue-800">Kondisi minggu ini</p>
+                <p id="rekDetailBanner" class="text-xs text-blue-600 mt-0.5">Memuat data cuaca...</p>
+              </div>
+            </div>
+
+            <!-- Kartu-kartu -->
+            <div id="rekKartuMinggu" class="space-y-3"></div>
+
+            <!-- Aktivitas -->
+            <p class="text-xs font-bold text-gray-400 tracking-widest mt-5 mb-3">AKTIVITAS PETANI MINGGU INI</p>
+            <div id="rekAktivitasMinggu" class="rounded-xl border border-slate-200 bg-white divide-y divide-slate-100"></div>
+
+          </div>
+
+          <!-- Isi Tab Bulan -->
+          <div id="rekBulan" class="p-5 hidden">
+
+            <!-- Banner bulan -->
+            <div class="rounded-xl p-4 mb-4 flex items-center gap-3" style="background:#e8f4fd;">
+              <span class="text-3xl">🌤️</span>
+              <div>
+                <p id="rekJudulBulan" class="text-sm font-semibold text-blue-800">Prediksi bulan depan</p>
+                <p id="rekDetailBulan" class="text-xs text-blue-600 mt-0.5">Berdasarkan tren cuaca saat ini</p>
+              </div>
+            </div>
+
+            <!-- Kartu-kartu bulan -->
+            <div id="rekKartuBulan" class="space-y-3"></div>
+
+            <!-- Aktivitas bulan -->
+            <p class="text-xs font-bold text-gray-400 tracking-widest mt-5 mb-3">AKTIVITAS PETANI BULAN DEPAN</p>
+            <div id="rekAktivitasBulan" class="rounded-xl border border-slate-200 bg-white divide-y divide-slate-100"></div>
+
+          </div>
         </div>
 
         <!-- tombol kabar sekitar -->

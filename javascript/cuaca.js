@@ -47,17 +47,6 @@ function cekPrediksi() {
       else if (iconCode.includes('09') || iconCode.includes('10')) emoji = "🌧️";
       else if (iconCode.includes('11')) emoji = "⛈️";
 
-      // rekomendasi berdasarkan kondisi
-      var rekomendasi = "";
-      if (hujan >= 70) {
-        rekomendasi = "Waspada hujan lebat! Hindari aktivitas di luar rumah jika tidak mendesak.";
-      } else if (suhu >= 33) {
-        rekomendasi = "Cuaca sangat panas! Perbanyak minum air putih dan hindari aktivitas berat di luar.";
-      } else if (suhu <= 22) {
-        rekomendasi = "Cuaca sejuk. Siapkan jaket untuk malam hari.";
-      } else {
-        rekomendasi = "Cuaca cukup nyaman. Tetap jaga kesehatan dan bawa payung sebagai antisipasi.";
-      }
 
       // tampilkan hasil
       document.getElementById('hasilLokasi').textContent      = '📍 ' + daerah + ', Jawa Timur';
@@ -70,7 +59,7 @@ function cekPrediksi() {
       document.getElementById('hasilAngin').textContent       = angin + ' km/j';
       document.getElementById('hasilHujan').textContent       = hujan + '%';
       document.getElementById('hasilUV').textContent          = cuaca.main.pressure + ' hPa';
-      document.getElementById('hasilRekomendasi').textContent = rekomendasi;
+      tampilkanRekomendasiPetani(suhu, lembab, hujan, angin, kondisi, emoji);
 
       // warna card
       var card = document.getElementById('cardUtama');
@@ -99,4 +88,177 @@ function cekLagi() {
   document.getElementById('inputDaerah').value  = '';
   document.getElementById('inputTanggal').value = '';
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// =============================================
+// REKOMENDASI PETANI
+// =============================================
+
+function setTabRek(tab) {
+  document.getElementById('rekMinggu').classList.toggle('hidden', tab !== 'minggu');
+  document.getElementById('rekBulan').classList.toggle('hidden', tab !== 'bulan');
+
+  var aktif   = 'flex-1 py-3 text-sm font-semibold text-sky-600 border-b-2 border-sky-500 bg-white transition-all';
+  var nonaktif = 'flex-1 py-3 text-sm font-semibold text-gray-400 border-b-2 border-transparent transition-all';
+  document.getElementById('tabMinggu').className = tab === 'minggu' ? aktif : nonaktif;
+  document.getElementById('tabBulan').className  = tab === 'bulan'  ? aktif : nonaktif;
+}
+
+function buatKartu(bg, border, ikonClass, warnaBadge, warnaTextBadge, labelBadge, warnaJudul, judul, warnaIsi, isi) {
+  return `
+    <div style="background:${bg}; border:0.5px solid ${border}; border-radius:12px; padding:14px 16px; display:flex; gap:14px; align-items:flex-start;">
+      <i class="${ikonClass}" style="font-size:22px; color:${warnaIsi}; margin-top:2px; flex-shrink:0;"></i>
+      <div>
+        <span style="display:inline-block; font-size:11px; font-weight:600; padding:3px 10px; border-radius:999px; margin-bottom:6px; background:${warnaBadge}; color:${warnaTextBadge};">${labelBadge}</span>
+        <p style="font-size:14px; font-weight:600; color:${warnaJudul}; margin:0 0 4px;">${judul}</p>
+        <p style="font-size:13px; color:${warnaIsi}; margin:0; line-height:1.65;">${isi}</p>
+      </div>
+    </div>`;
+}
+
+function buatAktivitas(warnaDot, judul, isi) {
+  return `
+    <div style="display:flex; align-items:flex-start; gap:10px; padding:10px 16px;">
+      <span style="width:8px; height:8px; border-radius:50%; background:${warnaDot}; flex-shrink:0; margin-top:5px;"></span>
+      <div>
+        <p style="font-size:13px; font-weight:600; color:#111827; margin:0 0 2px;">${judul}</p>
+        <p style="font-size:12px; color:#6b7280; margin:0; line-height:1.6;">${isi}</p>
+      </div>
+    </div>`;
+}
+
+function tampilkanRekomendasiPetani(suhu, lembab, hujan, angin, kondisi, emoji) {
+
+  // ── Banner minggu ──
+  var judulBanner = 'Kondisi minggu ini: ' + kondisi;
+  var detailBanner = suhu + '°C · Kelembaban ' + lembab + '% · Peluang hujan ' + hujan + '% · Angin ' + angin + ' km/j';
+  document.getElementById('rekEmojiBanner').textContent  = emoji;
+  document.getElementById('rekJudulBanner').textContent  = judulBanner;
+  document.getElementById('rekDetailBanner').textContent = detailBanner;
+
+  // ── Banner bulan ──
+  var judulBulan  = hujan >= 70 ? 'Prediksi Juni: Musim hujan, waspadai banjir lahan'
+                  : suhu >= 33  ? 'Prediksi Juni: Kemarau panas, irigasi jadi kunci'
+                  : 'Prediksi Juni: Awal musim kemarau ringan';
+  var detailBulan = hujan >= 70 ? 'Hujan masih sering · Drainase harus siap'
+                  : suhu >= 33  ? 'Suhu tinggi · Kelembaban turun · Siram lebih sering'
+                  : 'Lebih cerah · Suhu naik · Potensi hujan di akhir bulan';
+  document.getElementById('rekJudulBulan').textContent  = judulBulan;
+  document.getElementById('rekDetailBulan').textContent = detailBulan;
+
+  // ── Kartu minggu ──
+  var kartuMinggu = [];
+
+  // Penyiraman
+  if (lembab >= 80) {
+    kartuMinggu.push(buatKartu('#eaf3de','#c0dd97','ti ti-droplet','#c0dd97','#27500a','Penyiraman','#27500a','Kurangi frekuensi siram','#3b6d11',
+      'Kelembaban ' + lembab + '%, tanah masih cukup lembap. Siram hanya jika tanah kering saat disentuh. Waktu terbaik: pagi 06.00–07.00 atau sore 16.00–17.00.'));
+  } else if (lembab <= 50 || suhu >= 33) {
+    kartuMinggu.push(buatKartu('#faeeda','#fac775','ti ti-droplet','#fac775','#412402','Penyiraman','#412402','Siram lebih sering dari biasanya','#633806',
+      'Suhu ' + suhu + '°C dan kelembaban rendah membuat tanah cepat kering. Siram pagi dan sore hari. Gunakan mulsa untuk menjaga kelembaban tanah lebih lama.'));
+  } else {
+    kartuMinggu.push(buatKartu('#eaf3de','#c0dd97','ti ti-droplet','#c0dd97','#27500a','Penyiraman','#27500a','Siram normal seperti biasa','#3b6d11',
+      'Kondisi kelembaban ' + lembab + '% cukup ideal. Siram seperti biasa pagi pukul 06.00–07.00 atau sore 16.00–17.00.'));
+  }
+
+  // Pemupukan
+  if (angin <= 10 && suhu < 33 && hujan < 50) {
+    kartuMinggu.push(buatKartu('#faeeda','#fac775','ti ti-seeding','#fac775','#412402','Pemupukan','#412402','Waktu tepat untuk pupuk daun','#633806',
+      'Suhu ' + suhu + '°C dan angin pelan (' + angin + ' km/j) cocok untuk penyemprotan pupuk daun. Lakukan pagi hari. Hindari siang hari agar pupuk tidak menguap.'));
+  } else if (hujan >= 70) {
+    kartuMinggu.push(buatKartu('#fcebeb','#f7c1c1','ti ti-seeding','#f7c1c1','#501313','Pemupukan','#501313','Tunda pemupukan minggu ini','#791f1f',
+      'Peluang hujan ' + hujan + '% terlalu tinggi. Pupuk akan terbawa air hujan sebelum terserap tanaman. Tunggu cuaca lebih kering sebelum memupuk.'));
+  }
+
+  // Hama
+  if (lembab >= 75) {
+    kartuMinggu.push(buatKartu('#fcebeb','#f7c1c1','ti ti-bug','#f7c1c1','#501313','Peringatan Hama','#501313','Risiko jamur & wereng meningkat','#791f1f',
+      'Kelembaban ' + lembab + '% mempercepat tumbuhnya jamur daun dan perkembangan wereng. Periksa bagian bawah daun 2x seminggu. Siapkan fungisida organik jika ada bercak.'));
+  }
+
+  // Penanaman
+  if (hujan >= 70) {
+    kartuMinggu.push(buatKartu('#e6f1fb','#b5d4f4','ti ti-plant-2','#b5d4f4','#042c53','Penanaman','#042c53','Tunda penanaman bibit baru','#0c447c',
+      'Hujan lebat bisa merusak bibit muda yang baru ditanam. Tunda penanaman hingga cuaca lebih stabil. Manfaatkan waktu ini untuk menyiapkan dan mengolah lahan.'));
+  } else if (suhu >= 26 && suhu <= 32 && lembab >= 60 && hujan < 50) {
+    kartuMinggu.push(buatKartu('#eaf3de','#c0dd97','ti ti-plant-2','#c0dd97','#27500a','Penanaman','#27500a','Kondisi mendukung untuk menanam','#3b6d11',
+      'Suhu ' + suhu + '°C dan kelembaban ' + lembab + '% ideal untuk pertumbuhan bibit. Cocok menanam padi, jagung, atau sayuran. Tanam pagi hari sebelum terik.'));
+  } else {
+    kartuMinggu.push(buatKartu('#faeeda','#fac775','ti ti-plant-2','#fac775','#412402','Penanaman','#412402','Cukup kondusif, perhatikan suhu','#633806',
+      'Kondisi cukup mendukung namun perhatikan suhu ' + suhu + '°C. Pilih varietas yang sesuai iklim dan tanam di pagi hari untuk mengurangi stres panas pada bibit.'));
+  }
+
+  document.getElementById('rekKartuMinggu').innerHTML = kartuMinggu.join('');
+
+  // ── Aktivitas minggu ──
+  var aktMinggu = [];
+  aktMinggu.push(buatAktivitas('#639922', 'Senin–Selasa: Semprot pupuk daun',
+    'Lakukan pagi pukul 05.30–07.00. Angin pelan memastikan pupuk tidak terbawa angin dan terserap optimal oleh daun.'));
+  aktMinggu.push(buatAktivitas('#639922', 'Rabu: Penyiangan gulma',
+    'Tanah lembap memudahkan pencabutan gulma. Kerjakan pagi hari sebelum terik. Kelembaban tinggi mempercepat pertumbuhan gulma.'));
+  aktMinggu.push(buatAktivitas('#ba7517', 'Kamis: Inspeksi hama & penyakit',
+    'Periksa bagian bawah daun untuk kutu, ulat, atau bercak jamur. Catat tanaman bergejala dan semprot fungisida jika ditemukan.'));
+
+  if (lembab >= 80 || hujan < 30) {
+    aktMinggu.push(buatAktivitas('#ba7517', 'Jumat: Cek tanah, siram jika perlu',
+      'Setelah beberapa hari, cek kelembaban tanah. Jika kering, siram sore pukul 16.00–17.30. Hindari penyiraman malam hari.'));
+  } else {
+    aktMinggu.push(buatAktivitas('#ba7517', 'Jumat: Siram tambahan',
+      'Suhu tinggi dan kelembaban rendah, tambahkan frekuensi siram. Lakukan sore hari dan gunakan mulsa untuk menjaga kelembaban.'));
+  }
+
+  aktMinggu.push(buatAktivitas('#185fa5', 'Sabtu–Minggu: Olah & siapkan lahan',
+    'Bajak tanah, tambahkan kompos atau pupuk kandang. Bersihkan saluran drainase sebagai antisipasi perubahan cuaca.'));
+
+  document.getElementById('rekAktivitasMinggu').innerHTML = aktMinggu.join('');
+
+  // ── Kartu bulan ──
+  var kartuBulan = [];
+
+  if (hujan >= 70) {
+    kartuBulan.push(buatKartu('#eaf3de','#c0dd97','ti ti-plant-2','#c0dd97','#27500a','Tanam','#27500a','Pilih tanaman tahan air','#3b6d11',
+      'Kondisi basah cocok untuk padi sawah. Hindari tanaman yang mudah busuk akar. Pastikan drainase lahan berjalan baik sebelum tanam.'));
+    kartuBulan.push(buatKartu('#fcebeb','#f7c1c1','ti ti-cloud-rain','#f7c1c1','#501313','Antisipasi','#501313','Perkuat drainase & pematang sawah','#791f1f',
+      'Hujan masih sering terjadi. Bersihkan saluran air, perkuat pematang agar lahan tidak tergenang. Lakukan minggu ini sebelum hujan semakin lebat.'));
+    kartuBulan.push(buatKartu('#faeeda','#fac775','ti ti-droplet','#fac775','#412402','Irigasi','#412402','Kurangi irigasi, manfaatkan air hujan','#633806',
+      'Air hujan sudah cukup. Kurangi penggunaan pompa. Fokus pada pengelolaan air agar tidak berlebih dan merusak akar tanaman.'));
+  } else if (suhu >= 33) {
+    kartuBulan.push(buatKartu('#eaf3de','#c0dd97','ti ti-plant-2','#c0dd97','#27500a','Tanam','#27500a','Pilih tanaman tahan panas','#3b6d11',
+      'Kemarau panas cocok untuk jagung, cabai, dan kacang tanah. Ketiganya tahan suhu tinggi dan butuh sinar matahari penuh. Siapkan benih dari sekarang.'));
+    kartuBulan.push(buatKartu('#faeeda','#fac775','ti ti-droplet','#fac775','#412402','Irigasi','#412402','Siram lebih sering, 1–2 hari sekali','#633806',
+      'Kemarau membuat tanah cepat kering. Jadwalkan irigasi 1–2 hari sekali. Pastikan pompa dan selang irigasi berfungsi baik sebelum musim tanam.'));
+    kartuBulan.push(buatKartu('#fcebeb','#f7c1c1','ti ti-sun','#f7c1c1','#501313','Perhatian','#501313','Pasang mulsa untuk kurangi penguapan','#791f1f',
+      'Suhu tinggi mempercepat penguapan air tanah. Gunakan mulsa jerami atau plastik di sekitar tanaman untuk menjaga kelembaban tanah lebih lama.'));
+  } else {
+    kartuBulan.push(buatKartu('#eaf3de','#c0dd97','ti ti-plant-2','#c0dd97','#27500a','Tanam','#27500a','Cocok menanam jagung & cabai','#3b6d11',
+      'Awal bulan depan ideal untuk jagung dan cabai. Keduanya tahan kemarau ringan dan butuh sinar matahari penuh. Siapkan benih dari sekarang.'));
+    kartuBulan.push(buatKartu('#faeeda','#fac775','ti ti-droplet','#fac775','#412402','Irigasi','#412402','Siapkan sistem irigasi dari sekarang','#633806',
+      'Kemarau ringan membuat tanah lebih cepat kering. Jadwalkan penyiraman 2 hari sekali. Pastikan pompa dan selang berfungsi baik sebelum musim tanam.'));
+    kartuBulan.push(buatKartu('#fcebeb','#f7c1c1','ti ti-cloud-rain','#f7c1c1','#501313','Antisipasi','#501313','Waspadai hujan tiba-tiba di akhir bulan','#791f1f',
+      'Potensi hujan meningkat di akhir bulan. Bersihkan saluran drainase dan perkuat pematang sawah agar lahan tidak tergenang.'));
+  }
+
+  document.getElementById('rekKartuBulan').innerHTML = kartuBulan.join('');
+
+  // ── Aktivitas bulan ──
+  var aktBulan = [];
+  aktBulan.push(buatAktivitas('#639922', 'Akhir bulan ini: Olah lahan & pupuk dasar',
+    'Bajak tanah dan campurkan pupuk kandang atau kompos. Beri waktu 5–7 hari agar tanah siap menerima bibit di awal bulan depan.'));
+
+  if (hujan >= 70) {
+    aktBulan.push(buatAktivitas('#639922', 'Awal bulan depan: Tanam padi sawah',
+      'Kondisi basah cocok untuk padi. Tanam pagi hari. Pastikan drainase sawah terkontrol agar air tidak menggenangi bibit muda.'));
+  } else {
+    aktBulan.push(buatAktivitas('#639922', 'Awal bulan depan: Tanam jagung atau cabai',
+      'Tanam di pagi hari saat suhu belum tinggi. Beri jarak tanam yang cukup agar sirkulasi udara baik dan mengurangi risiko penyakit.'));
+  }
+
+  aktBulan.push(buatAktivitas('#ba7517', 'Minggu ke-2: Siram rutin & pupuk susulan',
+    'Siram sesuai jadwal. Berikan pupuk NPK susulan di minggu ke-2 setelah tanam untuk mendorong pertumbuhan vegetatif yang optimal.'));
+  aktBulan.push(buatAktivitas('#ba7517', 'Minggu ke-3: Inspeksi hama & penyakit',
+    'Periksa tanaman secara menyeluruh. Pantau wereng, ulat grayak, dan bercak daun. Siapkan pestisida organik jika ditemukan gejala awal.'));
+  aktBulan.push(buatAktivitas('#185fa5', 'Akhir bulan: Bersihkan drainase & pantau cuaca',
+    'Hujan bisa datang tiba-tiba. Pastikan saluran air tidak tersumbat agar tanaman tidak terendam saat hujan deras mendatang.'));
+
+  document.getElementById('rekAktivitasBulan').innerHTML = aktBulan.join('');
 }
