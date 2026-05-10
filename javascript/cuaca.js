@@ -210,27 +210,73 @@ function tampilkanRekomendasiPetani(suhu, lembab, hujan, angin, kondisi, emoji) 
 
   document.getElementById('rekKartuMinggu').innerHTML = kartuMinggu.join('');
 
-  // ── Aktivitas minggu ──
-  var aktMinggu = [];
+  // ── Aktivitas minggu petani ──
+var aktMinggu = [];
+
+// Senin–Selasa: tergantung hujan & angin
+if (hujan >= 70) {
+  aktMinggu.push(buatAktivitas('#a32d2d', 'Senin–Selasa: Pantau drainase lahan',
+    'Hujan lebat diprediksi. Jangan keluar lahan saat hujan deras. Pastikan saluran air tidak tersumbat agar lahan tidak tergenang.'));
+} else if (angin <= 10 && suhu < 33) {
   aktMinggu.push(buatAktivitas('#639922', 'Senin–Selasa: Semprot pupuk daun',
-    'Lakukan pagi pukul 05.30–07.00. Angin pelan memastikan pupuk tidak terbawa angin dan terserap optimal oleh daun.'));
+    'Angin pelan ' + angin + ' km/j dan suhu ' + suhu + '°C ideal untuk pemupukan daun. Lakukan pagi pukul 05.30–07.00 sebelum suhu naik.'));
+} else if (suhu >= 33) {
+  aktMinggu.push(buatAktivitas('#ba7517', 'Senin–Selasa: Siram pagi & pasang mulsa',
+    'Suhu ' + suhu + '°C cukup panas. Siram pagi sebelum terik. Pasang mulsa di sekitar tanaman untuk menjaga kelembaban tanah.'));
+} else {
+  aktMinggu.push(buatAktivitas('#639922', 'Senin–Selasa: Perawatan rutin tanaman',
+    'Kondisi cuaca cukup normal. Lakukan penyiraman pagi dan periksa kondisi tanaman secara umum.'));
+}
+
+// Rabu: tergantung kelembaban
+if (lembab >= 75) {
   aktMinggu.push(buatAktivitas('#639922', 'Rabu: Penyiangan gulma',
-    'Tanah lembap memudahkan pencabutan gulma. Kerjakan pagi hari sebelum terik. Kelembaban tinggi mempercepat pertumbuhan gulma.'));
-  aktMinggu.push(buatAktivitas('#ba7517', 'Kamis: Inspeksi hama & penyakit',
-    'Periksa bagian bawah daun untuk kutu, ulat, atau bercak jamur. Catat tanaman bergejala dan semprot fungisida jika ditemukan.'));
+    'Kelembaban ' + lembab + '% membuat tanah lembap sehingga gulma mudah dicabut. Kerjakan pagi hari sebelum terik.'));
+} else if (hujan >= 70) {
+  aktMinggu.push(buatAktivitas('#a32d2d', 'Rabu: Periksa kondisi tanaman',
+    'Setelah hujan, periksa apakah ada tanaman roboh atau akar terendam. Tegakkan kembali tanaman yang miring.'));
+} else {
+  aktMinggu.push(buatAktivitas('#639922', 'Rabu: Penyiangan & penggemburan tanah',
+    'Tanah cukup kering, cocok untuk penggemburan sekaligus penyiangan gulma. Lakukan pagi hari.'));
+}
 
-  if (lembab >= 80 || hujan < 30) {
-    aktMinggu.push(buatAktivitas('#ba7517', 'Jumat: Cek tanah, siram jika perlu',
-      'Setelah beberapa hari, cek kelembaban tanah. Jika kering, siram sore pukul 16.00–17.30. Hindari penyiraman malam hari.'));
-  } else {
-    aktMinggu.push(buatAktivitas('#ba7517', 'Jumat: Siram tambahan',
-      'Suhu tinggi dan kelembaban rendah, tambahkan frekuensi siram. Lakukan sore hari dan gunakan mulsa untuk menjaga kelembaban.'));
-  }
+// Kamis: inspeksi hama (selalu, tapi pesannya beda)
+if (lembab >= 75 || hujan >= 50) {
+  aktMinggu.push(buatAktivitas('#ba7517', 'Kamis: Inspeksi hama & jamur',
+    'Kelembaban ' + lembab + '% meningkatkan risiko jamur dan wereng. Periksa bagian bawah daun, semprot fungisida organik jika ada bercak.'));
+} else if (suhu >= 33) {
+  aktMinggu.push(buatAktivitas('#ba7517', 'Kamis: Inspeksi hama & stres panas',
+    'Suhu tinggi ' + suhu + '°C bisa memicu stres pada tanaman. Periksa daun yang mengering atau menggulung, tanda kekurangan air.'));
+} else {
+  aktMinggu.push(buatAktivitas('#ba7517', 'Kamis: Inspeksi rutin hama & penyakit',
+    'Periksa bagian bawah daun untuk kutu, ulat, atau bercak. Catat tanaman bergejala dan semprot jika ditemukan.'));
+}
 
+// Jumat: penyiraman tergantung kondisi
+if (hujan >= 70) {
+  aktMinggu.push(buatAktivitas('#a32d2d', 'Jumat: Kurangi atau tunda penyiraman',
+    'Hujan sudah cukup membasahi tanah. Tunda penyiraman hari ini. Cek kelembaban tanah sebelum memutuskan siram atau tidak.'));
+} else if (lembab >= 80) {
+  aktMinggu.push(buatAktivitas('#ba7517', 'Jumat: Cek tanah, siram jika perlu',
+    'Kelembaban udara masih ' + lembab + '%. Cek kondisi tanah dulu — jika masih lembap, tunda siram. Kalau kering, siram sore pukul 16.00–17.30.'));
+} else {
+  aktMinggu.push(buatAktivitas('#ba7517', 'Jumat: Siram tambahan sore hari',
+    'Kelembaban rendah ' + lembab + '% dan suhu ' + suhu + '°C membuat tanah cepat kering. Siram sore pukul 16.00–17.30 dan gunakan mulsa.'));
+}
+
+// Sabtu–Minggu: tergantung kondisi umum
+if (hujan >= 70) {
+  aktMinggu.push(buatAktivitas('#185fa5', 'Sabtu–Minggu: Perkuat drainase & pematang',
+    'Manfaatkan jeda hujan untuk bersihkan saluran air dan perkuat pematang sawah agar lahan tidak kebanjiran minggu depan.'));
+} else if (suhu >= 33) {
+  aktMinggu.push(buatAktivitas('#185fa5', 'Sabtu–Minggu: Siapkan sistem irigasi',
+    'Kemarau panas diprediksi berlanjut. Cek pompa dan selang irigasi. Pertimbangkan pasang mulsa di seluruh lahan untuk hemat air.'));
+} else {
   aktMinggu.push(buatAktivitas('#185fa5', 'Sabtu–Minggu: Olah & siapkan lahan',
     'Bajak tanah, tambahkan kompos atau pupuk kandang. Bersihkan saluran drainase sebagai antisipasi perubahan cuaca.'));
+}
 
-  document.getElementById('rekAktivitasMinggu').innerHTML = aktMinggu.join('');
+document.getElementById('rekAktivitasMinggu').innerHTML = aktMinggu.join('');
 
   // ── Kartu bulan ──
   var kartuBulan = [];
