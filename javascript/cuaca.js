@@ -48,7 +48,10 @@ if (!list || !list[idx]) {
   idx = list.length - 1;
 }
 
-var item    = list[idx];
+var item = list[idx];
+console.log('item:', item);
+console.log('list length:', list.length);
+console.log('idx:', idx);
 var suhu    = Math.round(item.main.temp);
 var rasa    = Math.round(item.main.feels_like);
 var lembab  = item.main.humidity;
