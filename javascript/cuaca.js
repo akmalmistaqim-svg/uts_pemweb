@@ -20,56 +20,53 @@ function cekPrediksi() {
   }
   error.classList.add('hidden');
 
-  // fetch data cuaca dari OpenWeatherMap lewat PHP
-  fetch('../api/ambilCuaca.php?kota=' + encodeURIComponent(daerah))
+  // fetch data cuaca dari open meteo lewat PHP
+   fetch('../api/ambilCuaca.php?kota=' + encodeURIComponent(daerah) + '&tanggal=' + tanggal)
     .then(res => res.json())
     .then(cuaca => {
+      var d    = cuaca.data;
+      var mode = cuaca.mode;
+      var idx  = (mode === 'forecast') ? cuaca.daily_index : 0;
 
-      if (cuaca.error) {
-        alert('Gagal ambil data cuaca: ' + cuaca.error);
-        return;
-      }
+      var suhu, rasa, lembab, angin, hujan, kondisiKode, tekanan;
 
-      // ambil data dari response OpenWeatherMap
-      var suhu      = Math.round(cuaca.main.temp);
-      var rasa      = Math.round(cuaca.main.feels_like);
-      var lembab    = cuaca.main.humidity;
-      var angin     = Math.round(cuaca.wind.speed * 3.6); // m/s ke km/j
-      var kondisi   = cuaca.weather[0].description;
-      var hujan     = cuaca.clouds.all; // persentase awan sebagai estimasi hujan
-
-      // emoji berdasarkan kondisi
-      var emoji = "⛅";
-      var iconCode = cuaca.weather[0].icon;
-      if (iconCode.includes('01')) emoji = "☀️";
-      else if (iconCode.includes('02') || iconCode.includes('03')) emoji = "🌤️";
-      else if (iconCode.includes('04')) emoji = "☁️";
-      else if (iconCode.includes('09') || iconCode.includes('10')) emoji = "🌧️";
-      else if (iconCode.includes('11')) emoji = "⛈️";
-
-
-      // tampilkan hasil
-      document.getElementById('hasilLokasi').textContent      = '📍 ' + daerah + ', Jawa Timur';
-      document.getElementById('hasilTanggal').textContent     = formatTanggal(tanggal);
-      document.getElementById('hasilEmoji').textContent       = emoji;
-      document.getElementById('hasilSuhu').textContent        = suhu + '°';
-      document.getElementById('hasilKondisi').textContent     = kondisi;
-      document.getElementById('hasilRasa').textContent        = 'Terasa seperti ' + rasa + '°C';
-      document.getElementById('hasilLembab').textContent      = lembab + '%';
-      document.getElementById('hasilAngin').textContent       = angin + ' km/j';
-      document.getElementById('hasilHujan').textContent       = hujan + '%';
-      document.getElementById('hasilUV').textContent          = cuaca.main.pressure + ' hPa';
-      tampilkanRekomendasiPetani(suhu, lembab, hujan, angin, kondisi, emoji);
-
-      // warna card
-      var card = document.getElementById('cardUtama');
-      if (hujan >= 70) {
-        card.className = "bg-gradient-to-br from-slate-600 to-slate-700 text-white rounded-2xl p-6 mb-4 shadow-sm";
-      } else if (suhu >= 33) {
-        card.className = "bg-gradient-to-br from-orange-400 to-amber-500 text-white rounded-2xl p-6 mb-4 shadow-sm";
+      if (mode === 'forecast') {
+          // Pakai data harian sesuai tanggal
+          suhu       = Math.round((d.daily.temperature_2m_max[idx] + d.daily.temperature_2m_min[idx]) / 2);
+          rasa       = suhu; // open-meteo daily tidak ada feels_like
+          lembab     = d.current.relative_humidity_2m; // pakai current humidity
+          angin      = Math.round(d.current.wind_speed_10m);
+          hujan      = d.daily.precipitation_probability_max[idx];
+          kondisiKode= d.daily.weather_code[idx];
+          tekanan    = d.current.surface_pressure;
       } else {
-        card.className = "bg-gradient-to-br from-blue-500 to-sky-400 text-white rounded-2xl p-6 mb-4 shadow-sm";
+          // Pakai current weather
+          suhu       = Math.round(d.current.temperature_2m);
+          rasa       = Math.round(d.current.apparent_temperature);
+          lembab     = d.current.relative_humidity_2m;
+          angin      = Math.round(d.current.wind_speed_10m);
+          hujan      = d.daily.precipitation_probability_max[0];
+          kondisiKode= d.current.weather_code;
+          tekanan    = d.current.surface_pressure;
       }
+
+      // Kondisi teks & emoji dari WMO weather code
+      function getKondisi(code) {
+          if (code === 0)              return { teks: "Cerah", emoji: "☀️" };
+          if (code <= 2)               return { teks: "Cerah Berawan", emoji: "🌤️" };
+          if (code === 3)              return { teks: "Berawan", emoji: "☁️" };
+          if (code <= 49)              return { teks: "Berkabut", emoji: "🌫️" };
+          if (code <= 59)              return { teks: "Gerimis", emoji: "🌦️" };
+          if (code <= 69)              return { teks: "Hujan", emoji: "🌧️" };
+          if (code <= 79)              return { teks: "Hujan Es", emoji: "🌨️" };
+          if (code <= 82)              return { teks: "Hujan Lebat", emoji: "🌧️" };
+          if (code <= 99)              return { teks: "Badai Petir", emoji: "⛈️" };
+          return { teks: "Tidak Diketahui", emoji: "⛅" };
+      }
+
+      var cuacaInfo = getKondisi(kondisiKode);
+      var kondisi   = cuacaInfo.teks;
+      var emoji     = cuacaInfo.emoji;
 
       document.getElementById('hasilPrediksi').classList.add('tampil');
       document.getElementById('hasilPrediksi').scrollIntoView({ behavior: 'smooth', block: 'start' });
