@@ -31,16 +31,28 @@ function cekPrediksi() {
       }
 
       // ambil data dari response OpenWeatherMap
-      var suhu      = Math.round(cuaca.main.temp);
-      var rasa      = Math.round(cuaca.main.feels_like);
-      var lembab    = cuaca.main.humidity;
-      var angin     = Math.round(cuaca.wind.speed * 3.6); // m/s ke km/j
-      var kondisi   = cuaca.weather[0].description;
-      var hujan     = cuaca.clouds.all; // persentase awan sebagai estimasi hujan
+      // Cari index data sesuai tanggal yang dipilih
+var list = cuaca.list;
+var idx  = 0;
+if (tanggal) {
+  for (var i = 0; i < list.length; i++) {
+    if (list[i].dt_txt.startsWith(tanggal)) {
+      idx = i;
+      break;
+    }
+  }
+}
 
-      // emoji berdasarkan kondisi
-      var emoji = "⛅";
-      var iconCode = cuaca.weather[0].icon;
+      var item    = list[idx];
+      var suhu    = Math.round(item.main.temp);
+      var rasa    = Math.round(item.main.feels_like);
+      var lembab  = item.main.humidity;
+      var angin   = Math.round(item.wind.speed * 3.6);
+      var kondisi = item.weather[0].description;
+      var hujan   = item.clouds.all;
+
+      var emoji    = "⛅";
+      var iconCode = item.weather[0].icon;
       if (iconCode.includes('01')) emoji = "☀️";
       else if (iconCode.includes('02') || iconCode.includes('03')) emoji = "🌤️";
       else if (iconCode.includes('04')) emoji = "☁️";
