@@ -174,13 +174,22 @@ $komentar = mysqli_query($koneksi, "SELECT * FROM komentar ORDER BY dibuat_pada 
       <?php endif; ?>
     </div>
 
+      <div class="flex gap-3 mt-6">
     <a href="dashboard.php"
-      class="inline-flex items-center gap-2 text-sm font-medium bg-white border border-sky-200 text-sky-600 hover:bg-sky-50 hover:border-sky-300 px-4 py-2 rounded-xl transition-colors shadow-sm mt-6">
+      class="flex-1 inline-flex items-center justify-center gap-2 text-sm font-medium bg-white border border-sky-200 text-sky-600 hover:bg-sky-50 hover:border-sky-300 px-4 py-2 rounded-xl transition-colors shadow-sm">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path d="M19 12H5M12 5l-7 7 7 7"/>
       </svg>
-      Kembali ke Dashboard
+      Dashboard
     </a>
+    <a href="riwayat.php"
+      class="flex-1 inline-flex items-center justify-center gap-2 text-sm font-medium bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-xl transition-colors shadow-sm">
+      🕐 Riwayat
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </a>
+  </div>
 
   </div>
 

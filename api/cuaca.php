@@ -330,17 +330,22 @@ if (!isset($_SESSION['id_pengguna'])) {
         </div>
 
         <!-- tombol kabar sekitar -->
-        <div class="rounded-2xl p-5 border border-slate-200 text-center" style="background:#f4f6fa;">
-          <p class="text-sm text-gray-500 mb-3">Bagikan kondisi cuaca aktual di daerahmu</p>
+        <!-- tombol navigasi -->
+      <div class="rounded-2xl p-5 border border-slate-200 text-center" style="background:#f4f6fa;">
+        <p class="text-sm text-gray-500 mb-3">Masuk ke halaman lain</p>
+        <div class="flex gap-3">
           <a href="kabar_sekitar.php"
-            class="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white
-            font-semibold px-6 py-2.5 rounded-xl transition-colors">
+            class="flex-1 inline-flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-600 text-white
+            font-semibold px-4 py-2.5 rounded-xl transition-colors text-sm">
             💬 Kabar Sekitar
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
+          </a>
+          <a href="riwayat.php"
+            class="flex-1 inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-sky-600
+            font-semibold px-4 py-2.5 rounded-xl border border-slate-200 transition-colors text-sm">
+            🕐 Riwayat
           </a>
         </div>
+      </div>
 
       </div>
     </div>
