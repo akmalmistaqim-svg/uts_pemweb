@@ -111,7 +111,7 @@ if (!isset($_SESSION['id_pengguna'])) {
     <div class="max-w-screen-xl flex items-center justify-between mx-auto px-6 py-4">
       <a href="dashboard.php" class="flex items-center gap-3">
         <img src="../1f324_3d.webp" class="h-7" alt="Logo Cuaca" />
-        <span class="text-xl text-white font-semibold whitespace-nowrap">Website Prediksi Cuaca</span>
+        <span class="text-xl text-white font-semibold whitespace-nowrap">CuacaKu</span>
       </a>
 
       <div class="hidden md:flex items-center gap-6">

@@ -30,7 +30,7 @@ if (!isset($_SESSION['id_pengguna'])) {
 
   <style>
     body {
-      background: linear-gradient(160deg, #0ea5e9 0%, #38bdf8 50%, #bae6fd 100%);
+      background: #f4f6fa;
       min-height: 100vh;
     }
 
@@ -146,7 +146,7 @@ if (!isset($_SESSION['id_pengguna'])) {
     <div class="max-w-screen-xl flex items-center justify-between mx-auto px-6 py-4">
       <a href="dashboard.php" class="flex items-center gap-3">
         <img src="../1f324_3d.webp" class="h-7" alt="Logo Cuaca" />
-        <span class="text-xl text-white font-semibold whitespace-nowrap">Website Prediksi Cuaca</span>
+        <span class="text-xl text-white font-semibold whitespace-nowrap">CuacaKu</span>
       </a>
 
       <!-- Desktop Menu -->
@@ -253,31 +253,31 @@ if (!isset($_SESSION['id_pengguna'])) {
         </div>
 
         <div class="grid grid-cols-2 gap-3 mb-4">
-          <div class="bg-white rounded-2xl p-4 border border-slate-200">
+          <div class="rounded-2xl p-4 border border-slate-200" style="background:#f4f6fa;">
             <p class="text-xs text-gray-500 mb-1">💧 Kelembaban</p>
             <p id="hasilLembab" class="text-xl font-bold text-gray-900">72%</p>
           </div>
-          <div class="bg-white rounded-2xl p-4 border border-slate-200">
+          <div class="rounded-2xl p-4 border border-slate-200" style="background:#f4f6fa;">
             <p class="text-xs text-gray-500 mb-1">💨 Kec. Angin</p>
             <p id="hasilAngin" class="text-xl font-bold text-gray-900">14 km/j</p>
           </div>
-          <div class="bg-white rounded-2xl p-4 border border-slate-200">
+          <div class="rounded-2xl p-4 border border-slate-200" style="background:#f4f6fa;">
             <p class="text-xs text-gray-500 mb-1">🌧️ Peluang Hujan</p>
             <p id="hasilHujan" class="text-xl font-bold text-gray-900">20%</p>
           </div>
-          <div class="bg-white rounded-2xl p-4 border border-slate-200">
+          <div class="rounded-2xl p-4 border border-slate-200" style="background:#f4f6fa;">
             <p class="text-xs text-gray-500 mb-1">🌡️ Tekanan Udara</p>
             <p id="hasilUV" class="text-xl font-bold text-gray-900">-</p>
           </div>
         </div>
 
-        <div class="bg-white rounded-2xl p-5 border border-slate-200 mb-4">
+        <div class="rounded-2xl p-5 border border-slate-200 mb-4" style="background:#f4f6fa;">
           <h3 class="font-semibold text-gray-900 mb-3">💡 Rekomendasi</h3>
           <p id="hasilRekomendasi" class="text-sm text-gray-600 leading-relaxed"></p>
         </div>
 
         <!-- tombol kabar sekitar -->
-        <div class="bg-white rounded-2xl p-5 border border-slate-200 text-center">
+        <div class="rounded-2xl p-5 border border-slate-200 text-center" style="background:#f4f6fa;">
           <p class="text-sm text-gray-500 mb-3">Bagikan kondisi cuaca aktual di daerahmu</p>
           <a href="kabar_sekitar.php"
             class="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-600 text-white
@@ -293,7 +293,7 @@ if (!isset($_SESSION['id_pengguna'])) {
     </div>
   </div>
 
-  <div class="pb-16"></div>
+  <div class="pb-4"></div>
 
   <footer class="footer py-8 px-6 text-center">
     <p class="text-sm text-white/90">© 2026 CuacaKu. Sistem Prediksi Cuaca Jawa Timur.</p>
