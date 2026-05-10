@@ -17,43 +17,58 @@ $komentar = mysqli_query($koneksi, "SELECT * FROM komentar ORDER BY dibuat_pada 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
   <title>Kabar Sekitar - CuacaKu</title>
+  <style>
+    .navbar {
+      background: rgba(2, 132, 199, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.12);
+    }
+    .btn-logout {
+      border: 2px solid rgba(255,255,255,0.75);
+      color: white;
+      border-radius: 999px;
+      padding: 0.3rem 1.1rem;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+    }
+    .btn-logout:hover { background: rgba(255,255,255,0.2); }
+    .footer {
+      background: linear-gradient(160deg, #0c4a6e 0%, #075985 100%);
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+  </style>
 </head>
 
 <body class="bg-sky-100 text-gray-800 min-h-screen">
 
   <!-- navbar -->
-  <nav class="bg-sky-200 fixed w-full z-20 top-0 border-b border-sky-300">
+  <nav class="navbar fixed w-full z-20 top-0">
     <div class="max-w-screen-xl flex items-center justify-between mx-auto px-6 py-4">
       <a href="dashboard.php" class="flex items-center gap-3">
         <img src="../1f324_3d.webp" class="h-7" alt="Logo Cuaca" />
-        <span class="text-xl text-gray-900 font-semibold">CuacaKu</span>
+        <span class="text-xl text-white font-semibold">CuacaKu</span>
       </a>
 
       <!-- Desktop Menu -->
       <div class="hidden md:flex items-center gap-4">
-        <span class="text-sm text-gray-600">👋 <?php echo htmlspecialchars($_SESSION['nama']); ?></span>
-        <a href="logout.php"
-          class="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl transition-colors">
-          Logout
-        </a>
+        <span class="text-sm text-yellow-200 font-medium">👋 <?php echo htmlspecialchars($_SESSION['nama']); ?></span>
+        <a href="logout.php" class="btn-logout">Logout</a>
       </div>
 
       <!-- Hamburger Button (mobile only) -->
       <button id="hamburger" class="md:hidden flex flex-col justify-center items-center gap-1.5 w-8 h-8">
-        <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300" id="bar1"></span>
-        <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300" id="bar2"></span>
-        <span class="block w-6 h-0.5 bg-gray-700 transition-all duration-300" id="bar3"></span>
+        <span class="block w-6 h-0.5 bg-white transition-all duration-300" id="bar1"></span>
+        <span class="block w-6 h-0.5 bg-white transition-all duration-300" id="bar2"></span>
+        <span class="block w-6 h-0.5 bg-white transition-all duration-300" id="bar3"></span>
       </button>
     </div>
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="md:hidden hidden px-6 pb-4 border-t border-sky-300 bg-sky-200">
+    <div id="mobileMenu" class="md:hidden hidden px-6 pb-4 border-t border-white/20" style="background: rgba(2,132,199,0.95)">
       <div class="flex items-center justify-between pt-4">
-        <span class="text-sm text-gray-600">👋 <?php echo htmlspecialchars($_SESSION['nama']); ?></span>
-        <a href="logout.php"
-          class="text-sm bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl transition-colors">
-          Logout
-        </a>
+        <span class="text-sm text-yellow-200 font-medium">👋 <?php echo htmlspecialchars($_SESSION['nama']); ?></span>
+        <a href="logout.php" class="btn-logout">Logout</a>
       </div>
     </div>
   </nav>
@@ -169,8 +184,8 @@ $komentar = mysqli_query($koneksi, "SELECT * FROM komentar ORDER BY dibuat_pada 
 
   </div>
 
-  <footer class="bg-sky-400 border-t border-sky-500 py-8 px-6 text-center mt-10">
-    <p class="text-sm text-sky-100">© 2026 CuacaKu. Sistem Prediksi Cuaca Jawa Timur.</p>
+  <footer class="footer py-8 px-6 text-center mt-10">
+    <p class="text-sm text-white/90">© 2026 CuacaKu. Sistem Prediksi Cuaca Jawa Timur.</p>
   </footer>
 
   <script>
