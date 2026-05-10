@@ -39,7 +39,7 @@ $riwayat = mysqli_query($koneksi, "SELECT * FROM riwayat_prediksi ORDER BY dibua
   </style>
 </head>
 
-<body class="bg-sky-100 text-gray-800 min-h-screen">
+<body class="bg-sky-100 text-gray-800 min-h-screen flex flex-col">
 
   <!-- navbar -->
   <nav class="navbar fixed w-full z-20 top-0">
@@ -74,7 +74,7 @@ $riwayat = mysqli_query($koneksi, "SELECT * FROM riwayat_prediksi ORDER BY dibua
 
   <div class="h-16"></div>
 
-  <div class="max-w-2xl mx-auto px-6 py-10">
+  <div class="max-w-2xl mx-auto px-6 py-10 flex-1">
 
     <!-- header -->
     <div class="mb-8 text-center">
